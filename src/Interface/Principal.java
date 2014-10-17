@@ -16,6 +16,7 @@ import Interface.Vendas.Verificar_V;
 import conexão.DAOconf;
 import controle.ClienteDAO;
 import controle.DAOFactory;
+import controle.FabricanteDAO;
 import controle.memoria.MemoriaDAOFactory;
 
 /**
@@ -26,7 +27,7 @@ public class Principal extends javax.swing.JFrame {
 
     DAOFactory dao = new MemoriaDAOFactory();
     ClienteDAO clientedao = dao.getClienteDAO();
-    
+    FabricanteDAO fabricantedao = dao.getFabricanteDAO();
     /**
      * Creates new form Principal
      */
@@ -175,7 +176,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        Verificar_Fabricantes Ver = new Verificar_Fabricantes();
+        Verificar_Fabricantes Ver = new Verificar_Fabricantes(fabricantedao);
         Ver.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
