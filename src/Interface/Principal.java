@@ -16,8 +16,13 @@ import Interface.Vendas.Verificar_V;
 import conexão.DAOconf;
 import controle.ClienteDAO;
 import controle.DAOFactory;
+
 import controle.ProdutoDAO;
 import controle.VendasDAO;
+
+import controle.DespesaDAO;
+import controle.FabricanteDAO;
+
 import controle.memoria.MemoriaDAOFactory;
 
 /**
@@ -30,7 +35,8 @@ public class Principal extends javax.swing.JFrame {
     ClienteDAO clientedao = dao.getClienteDAO();
     VendasDAO vendasdao = dao.getVendasDAO();
     ProdutoDAO produtodao = dao.getProdutoDAO();
-    
+    FabricanteDAO fabricantedao = dao.getFabricanteDAO();
+    DespesaDAO despesadao = dao.getDespesaDAO();
     /**
      * Creates new form Principal
      */
@@ -179,7 +185,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        Verificar_Fabricantes Ver = new Verificar_Fabricantes();
+        Verificar_Fabricantes Ver = new Verificar_Fabricantes(fabricantedao);
         Ver.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -208,7 +214,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void despesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_despesasActionPerformed
-        Verificas_despesas vi = new Verificas_despesas();
+        Verificas_despesas vi = new Verificas_despesas(despesadao);
         vi.setVisible(true);
     }//GEN-LAST:event_despesasActionPerformed
 

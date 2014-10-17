@@ -6,8 +6,14 @@
 
 package Interface.Fabricante;
 
+import controle.FabricanteDAO;
+import entidades.Fabricante;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -16,23 +22,29 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Verificar_Fabricantes extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Verificar_Fabricantes
-     */
-    public Verificar_Fabricantes() {
+    FabricanteDAO manufacturer;
+    
+    public Verificar_Fabricantes(FabricanteDAO fabricantedao) {
+        manufacturer = fabricantedao;
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle("Fabricantes");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowActivated(WindowEvent e) {
+                atualizar();
+            }
+        });
         
         //listar os fabricantes
         
                 //Teste
-        ArrayList<Integer> listTeste = new ArrayList<>();
+        /*ArrayList<Integer> listTeste = new ArrayList<>();
         listTeste.add(1);
-        listTeste.add(3);
+        istTeste.add(3);
         listTeste.add(5);
         listTeste.add(2);
         listTeste.add(2);
@@ -42,14 +54,28 @@ public class Verificar_Fabricantes extends javax.swing.JFrame {
         listTeste.add(2);
         listTeste.add(2);
         listTeste.add(2);
-        DefaultTableModel tabela = (DefaultTableModel) jTable_tabela.getModel();
+        DefaultTableModel tabela = (DefaultTableModel) tabela.getModel();
         if(!listTeste.isEmpty()){
             for(Integer a: listTeste){
                 Object[] linha = {a,a,a,a};
                 tabela.addRow(linha);
             }
-        }
+        }*/
         
+    }
+    
+    public void atualizar() {
+        DefaultTableModel tabela_aux = (DefaultTableModel) tabela.getModel();
+        int max = tabela_aux.getRowCount();
+        for (int i = 0; i < max; i++) {
+            tabela_aux.removeRow(0);
+        }
+
+        List<Fabricante> listTeste = manufacturer.listarTodos();
+        for (Fabricante a : listTeste) {
+            Object[] linha = {a.getId(), a.getNome(), a.getTelefone(), a.getEmail()};
+            tabela_aux.addRow(linha);
+        }
     }
 
     /**
@@ -62,15 +88,16 @@ public class Verificar_Fabricantes extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable_tabela = new javax.swing.JTable();
+        tabela = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jButton_editar = new javax.swing.JButton();
-        jButton_fechar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        cadastrar = new javax.swing.JButton();
+        fechar = new javax.swing.JButton();
+        excluir = new javax.swing.JButton();
+        visualizar = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable_tabela.setModel(new javax.swing.table.DefaultTableModel(
+        tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -86,28 +113,35 @@ public class Verificar_Fabricantes extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable_tabela);
+        jScrollPane1.setViewportView(tabela);
 
         jLabel1.setText("Fabricantes");
 
-        jButton_editar.setText("Editar");
-        jButton_editar.addActionListener(new java.awt.event.ActionListener() {
+        cadastrar.setText("Cadastrar");
+        cadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_editarActionPerformed(evt);
+                cadastrarActionPerformed(evt);
             }
         });
 
-        jButton_fechar.setText("Fechar");
-        jButton_fechar.addActionListener(new java.awt.event.ActionListener() {
+        fechar.setText("Fechar");
+        fechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_fecharActionPerformed(evt);
+                fecharActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Excluir");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        excluir.setText("Excluir");
+        excluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                excluirActionPerformed(evt);
+            }
+        });
+
+        visualizar.setText("Visualizar");
+        visualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                visualizarActionPerformed(evt);
             }
         });
 
@@ -116,21 +150,25 @@ public class Verificar_Fabricantes extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(161, 161, 161)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(72, 72, 72)
-                        .addComponent(jButton_editar)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton_fechar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(247, 247, 247))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(109, 109, 109)
+                .addComponent(visualizar)
+                .addGap(33, 33, 33)
+                .addComponent(cadastrar)
+                .addGap(37, 37, 37)
+                .addComponent(excluir)
+                .addGap(32, 32, 32)
+                .addComponent(fechar)
+                .addContainerGap(84, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,21 +178,22 @@ public class Verificar_Fabricantes extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton_editar)
-                    .addComponent(jButton_fechar)
-                    .addComponent(jButton1))
+                    .addComponent(cadastrar)
+                    .addComponent(fechar)
+                    .addComponent(excluir)
+                    .addComponent(visualizar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton_fecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_fecharActionPerformed
+    private void fecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fecharActionPerformed
         // TODO add your handling code here:
         dispose();
-    }//GEN-LAST:event_jButton_fecharActionPerformed
+    }//GEN-LAST:event_fecharActionPerformed
 
-    private void jButton_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_editarActionPerformed
+    private void cadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarActionPerformed
         // TODO add your handling code here:
         Editar_Fabricante Edit = new Editar_Fabricante();
         Edit.setVisible(true);
@@ -162,21 +201,43 @@ public class Verificar_Fabricantes extends javax.swing.JFrame {
 //        
 //            //relistar Fabricantes
 //        System.out.println("Teste");
-    }//GEN-LAST:event_jButton_editarActionPerformed
+    }//GEN-LAST:event_cadastrarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirActionPerformed
         // TODO add your handling code here:
-        Excluir_fabricante ex = new Excluir_fabricante();
-        ex.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        int linha = tabela.getSelectedRow();
+        if (linha != -1) {
+            DefaultTableModel tabela1 = (DefaultTableModel) tabela.getModel();
+            Long codigo = (Long) tabela1.getValueAt(linha, 0);
+            System.out.println("Excluiu? "+manufacturer.remover(codigo));
+            Excluir_fabricante ex = new Excluir_fabricante();
+            ex.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this.getContentPane(),"Selecione uma linha.");
+        }
+    }//GEN-LAST:event_excluirActionPerformed
+
+    private void visualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizarActionPerformed
+        int linha = tabela.getSelectedRow();
+        if (linha != -1) {
+            DefaultTableModel tabela1 = (DefaultTableModel) tabela.getModel();
+            Long codigo = (Long) tabela1.getValueAt(linha, 0);
+            Fabricante fab = manufacturer.buscar(codigo);
+            Visualizar_Fab Ver = new Visualizar_Fab(fab, manufacturer);
+            Ver.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this.getContentPane(),"Selecione uma linha.");
+        }
+    }//GEN-LAST:event_visualizarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton_editar;
-    private javax.swing.JButton jButton_fechar;
+    private javax.swing.JButton cadastrar;
+    private javax.swing.JButton excluir;
+    private javax.swing.JButton fechar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable_tabela;
+    private javax.swing.JTable tabela;
+    private javax.swing.JToggleButton visualizar;
     // End of variables declaration//GEN-END:variables
 }
