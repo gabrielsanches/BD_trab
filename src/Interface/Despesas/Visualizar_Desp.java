@@ -22,7 +22,7 @@ import javax.swing.JFrame;
 public class Visualizar_Desp extends javax.swing.JFrame {
 
     DespesaDAO expenses;
-    Long cod;
+    long cod;
 
     /**
      * Creates new form Visualizar_Desp
@@ -30,12 +30,13 @@ public class Visualizar_Desp extends javax.swing.JFrame {
     public Visualizar_Desp(Despesa desp, DespesaDAO despesadao) {
         setLocationRelativeTo(null);
         setResizable(false);
-        setTitle("Cliente");
+        setTitle("Despesa");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
         expenses = despesadao;
+        System.out.println(expenses.listarTodos());
         cod = desp.getId();
-
+        
         descricao.setEditable(false);
         multa.setEditable(false);
         taxas.setEditable(false);
@@ -316,15 +317,15 @@ public class Visualizar_Desp extends javax.swing.JFrame {
             valor_pagar.setEditable(true);
             n_parcelas.setEditable(true);
         } else {
-            descricao.setEditable(true);
-            multa.setEditable(true);
-            taxas.setEditable(true);
-            despesa_fixa.setEnabled(true);
-            taxas.setEditable(true);
-            data_venc.setEditable(true);
-            data_pag.setEditable(true);
-            valor_pagar.setEditable(true);
-            n_parcelas.setEditable(true);
+            descricao.setEditable(false);
+            multa.setEditable(false);
+            taxas.setEditable(false);
+            despesa_fixa.setEnabled(false);
+            taxas.setEditable(false);
+            data_venc.setEditable(false);
+            data_pag.setEditable(false);
+            valor_pagar.setEditable(false);
+            n_parcelas.setEditable(false);
         }
     }//GEN-LAST:event_editActionPerformed
 

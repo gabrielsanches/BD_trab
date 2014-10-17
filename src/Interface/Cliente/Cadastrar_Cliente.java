@@ -22,10 +22,13 @@ import javax.swing.JFrame;
  */
 public class Cadastrar_Cliente extends javax.swing.JFrame {
 
+    ClienteDAO clientedao;
+    
     /**
      * Creates new form Cadastrar_Cliente
      */
-    public Cadastrar_Cliente() {
+    public Cadastrar_Cliente(ClienteDAO clientes) {
+        clientedao = clientes;
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
@@ -301,8 +304,6 @@ public class Cadastrar_Cliente extends javax.swing.JFrame {
                 , telefone.getText(), rua.getText(), bairro.getText(), Integer.parseInt(numero.getText()),
                 complemento.getText(), cidade.getText(), rg.getText(), cpf.getText(), uf.getText());
         
-        DAOFactory dao = new MemoriaDAOFactory();
-        ClienteDAO clientedao = dao.getClienteDAO();
         System.out.println("Inseriu Cliente? "+clientedao.inserir(cli));
         dispose();
     }//GEN-LAST:event_SalvarActionPerformed

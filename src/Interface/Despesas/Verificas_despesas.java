@@ -49,7 +49,7 @@ public class Verificas_despesas extends javax.swing.JFrame {
 
         List<Despesa> listTeste = expenses.listarTodos();
         for (Despesa a : listTeste) {
-            Object[] linha = {a.getId(), a.getDescricao(), a.getMulta(), a.getTaxas(), a.getFixa(), a.getForma()
+            Object[] linha = {a.getId(), a.getDescricao(), a.getMulta(), a.getTaxas(), a.isFixa(), a.getForma()
                     , a.getData_venc(), a.getData_pagamento(), a.getValor_pagar(), a.getN_parcelas()};
             tabela_aux.addRow(linha);
         }
@@ -174,7 +174,7 @@ public class Verificas_despesas extends javax.swing.JFrame {
        int linha = tabela.getSelectedRow();
         if (linha != -1) {
             DefaultTableModel tabela1 = (DefaultTableModel) tabela.getModel();
-            Long codigo = (Long) tabela1.getValueAt(linha, 0);
+            long codigo = (long) tabela1.getValueAt(linha, 0);
             Despesa desp = expenses.buscar(codigo);
             Visualizar_Desp Ver = new Visualizar_Desp(desp,expenses);
             Ver.setVisible(true);
@@ -185,7 +185,7 @@ public class Verificas_despesas extends javax.swing.JFrame {
 
     private void cadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarActionPerformed
         // TODO add your handling code here:
-        Cadastrar_Despesa despesa = new Cadastrar_Despesa();
+        Cadastrar_Despesa despesa = new Cadastrar_Despesa(expenses);
         despesa.setVisible(true);
     }//GEN-LAST:event_cadastrarActionPerformed
 
@@ -193,7 +193,7 @@ public class Verificas_despesas extends javax.swing.JFrame {
         int linha = tabela.getSelectedRow();
         if (linha != -1) {
             DefaultTableModel tabela1 = (DefaultTableModel) tabela.getModel();
-            Long codigo = (Long) tabela1.getValueAt(linha, 0);
+            long codigo = (long) tabela1.getValueAt(linha, 0);
             System.out.println("Excluiu id = "+codigo+" ? "+expenses.remover(codigo));
             atualizar();
         }else{

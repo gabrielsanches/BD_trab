@@ -16,13 +16,10 @@ import Interface.Vendas.Verificar_V;
 import conexão.DAOconf;
 import controle.ClienteDAO;
 import controle.DAOFactory;
-
 import controle.ProdutoDAO;
 import controle.VendasDAO;
-
 import controle.DespesaDAO;
 import controle.FabricanteDAO;
-
 import controle.memoria.MemoriaDAOFactory;
 
 /**

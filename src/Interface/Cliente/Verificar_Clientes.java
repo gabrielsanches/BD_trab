@@ -211,7 +211,7 @@ public class Verificar_Clientes extends javax.swing.JFrame {
 
     private void cadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarActionPerformed
         // TODO add your handling code here:
-        Cadastrar_Cliente cliente = new Cadastrar_Cliente();
+        Cadastrar_Cliente cliente = new Cadastrar_Cliente(cliented);
         cliente.setVisible(true);
     }//GEN-LAST:event_cadastrarActionPerformed
 

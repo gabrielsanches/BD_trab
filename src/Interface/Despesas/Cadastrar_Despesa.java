@@ -22,10 +22,13 @@ import javax.swing.JFrame;
  */
 public class Cadastrar_Despesa extends javax.swing.JFrame {
 
+    DespesaDAO despesadao;
+    
     /**
      * Creates new form Cadastrar_Despesa
      */
-    public Cadastrar_Despesa() {
+    public Cadastrar_Despesa(DespesaDAO despesas) {
+        despesadao=despesas;
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
@@ -292,8 +295,6 @@ public class Cadastrar_Despesa extends javax.swing.JFrame {
                 , despesaFixa.isSelected(),(String) forma_pag.getSelectedItem(), data_vencimento, data_pagamento
                 , Float.parseFloat(valor_pagar.getText()), Integer.parseInt(n_parcelas.getText()));
         
-        DAOFactory dao = new MemoriaDAOFactory();
-        DespesaDAO despesadao = dao.getDespesaDAO();
         System.out.println("Inseriu Despesas? "+despesadao.inserir(desp));
         dispose();
     }//GEN-LAST:event_salvarActionPerformed
@@ -303,40 +304,6 @@ public class Cadastrar_Despesa extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_cancelarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Cadastrar_Despesa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Cadastrar_Despesa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Cadastrar_Despesa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Cadastrar_Despesa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Cadastrar_Despesa().setVisible(true);
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton cancelar;
     private javax.swing.JFormattedTextField data_pag;
