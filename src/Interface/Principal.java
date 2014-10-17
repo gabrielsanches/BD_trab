@@ -16,6 +16,7 @@ import Interface.Vendas.Verificar_V;
 import conexão.DAOconf;
 import controle.ClienteDAO;
 import controle.DAOFactory;
+import controle.DespesaDAO;
 import controle.FabricanteDAO;
 import controle.memoria.MemoriaDAOFactory;
 
@@ -28,6 +29,7 @@ public class Principal extends javax.swing.JFrame {
     DAOFactory dao = new MemoriaDAOFactory();
     ClienteDAO clientedao = dao.getClienteDAO();
     FabricanteDAO fabricantedao = dao.getFabricanteDAO();
+    DespesaDAO despesadao = dao.getDespesaDAO();
     /**
      * Creates new form Principal
      */
@@ -205,7 +207,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void despesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_despesasActionPerformed
-        Verificas_despesas vi = new Verificas_despesas();
+        Verificas_despesas vi = new Verificas_despesas(despesadao);
         vi.setVisible(true);
     }//GEN-LAST:event_despesasActionPerformed
 

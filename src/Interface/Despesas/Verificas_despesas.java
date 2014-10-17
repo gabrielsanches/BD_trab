@@ -3,8 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Interface.Despesas;
+
+import controle.DespesaDAO;
+import entidades.Despesa;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -12,11 +20,39 @@ package Interface.Despesas;
  */
 public class Verificas_despesas extends javax.swing.JFrame {
 
+    DespesaDAO expenses;
+
     /**
      * Creates new form Verificas_despesas
      */
-    public Verificas_despesas() {
+    public Verificas_despesas(DespesaDAO despesadao) {
+        expenses = despesadao;
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
+        setTitle("Despesas");
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowActivated(WindowEvent e) {
+                atualizar();
+            }
+        });
+    }
+
+    public void atualizar() {
+        DefaultTableModel tabela_aux = (DefaultTableModel) tabela.getModel();
+        int max = tabela_aux.getRowCount();
+        for (int i = 0; i < max; i++) {
+            tabela_aux.removeRow(0);
+        }
+
+        List<Despesa> listTeste = expenses.listarTodos();
+        for (Despesa a : listTeste) {
+            Object[] linha = {a.getId(), a.getDescricao(), a.getMulta(), a.getTaxas(), a.getFixa(), a.getForma()
+                    , a.getData_venc(), a.getData_pagamento(), a.getValor_pagar(), a.getN_parcelas()};
+            tabela_aux.addRow(linha);
+        }
     }
 
     /**
@@ -30,16 +66,17 @@ public class Verificas_despesas extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton_editar = new javax.swing.JButton();
-        jButton_cadastrar = new javax.swing.JButton();
-        jButton_sair = new javax.swing.JButton();
+        tabela = new javax.swing.JTable();
+        visualizar = new javax.swing.JButton();
+        cadastrar = new javax.swing.JButton();
+        sair = new javax.swing.JButton();
+        excluir = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Despesas");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -55,16 +92,33 @@ public class Verificas_despesas extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabela);
 
-        jButton_editar.setText("Editar");
-
-        jButton_cadastrar.setText("Cadastrar");
-
-        jButton_sair.setText("Sair");
-        jButton_sair.addActionListener(new java.awt.event.ActionListener() {
+        visualizar.setText("Visualizar");
+        visualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_sairActionPerformed(evt);
+                visualizarActionPerformed(evt);
+            }
+        });
+
+        cadastrar.setText("Cadastrar");
+        cadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cadastrarActionPerformed(evt);
+            }
+        });
+
+        sair.setText("Sair");
+        sair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sairActionPerformed(evt);
+            }
+        });
+
+        excluir.setText("Excluir");
+        excluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                excluirActionPerformed(evt);
             }
         });
 
@@ -76,15 +130,17 @@ public class Verificas_despesas extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 799, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(278, 278, 278)
-                        .addComponent(jButton_editar)
+                        .addGap(206, 206, 206)
+                        .addComponent(visualizar)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton_cadastrar)
+                        .addComponent(cadastrar)
+                        .addGap(21, 21, 21)
+                        .addComponent(excluir)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton_sair)
-                        .addGap(0, 302, Short.MAX_VALUE)))
+                        .addComponent(sair)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -99,27 +155,59 @@ public class Verificas_despesas extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton_editar)
-                    .addComponent(jButton_cadastrar)
-                    .addComponent(jButton_sair))
+                    .addComponent(visualizar)
+                    .addComponent(cadastrar)
+                    .addComponent(sair)
+                    .addComponent(excluir))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_sairActionPerformed
+    private void sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairActionPerformed
         // TODO add your handling code here:
         dispose();
-    }//GEN-LAST:event_jButton_sairActionPerformed
+    }//GEN-LAST:event_sairActionPerformed
 
+    private void visualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizarActionPerformed
+       int linha = tabela.getSelectedRow();
+        if (linha != -1) {
+            DefaultTableModel tabela1 = (DefaultTableModel) tabela.getModel();
+            Long codigo = (Long) tabela1.getValueAt(linha, 0);
+            Despesa desp = expenses.buscar(codigo);
+            Visualizar_Desp Ver = new Visualizar_Desp(desp,expenses);
+            Ver.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this.getContentPane(),"Selecione uma linha.");
+        }
+    }//GEN-LAST:event_visualizarActionPerformed
+
+    private void cadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarActionPerformed
+        // TODO add your handling code here:
+        Cadastrar_Despesa despesa = new Cadastrar_Despesa();
+        despesa.setVisible(true);
+    }//GEN-LAST:event_cadastrarActionPerformed
+
+    private void excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirActionPerformed
+        int linha = tabela.getSelectedRow();
+        if (linha != -1) {
+            DefaultTableModel tabela1 = (DefaultTableModel) tabela.getModel();
+            Long codigo = (Long) tabela1.getValueAt(linha, 0);
+            System.out.println("Excluiu id = "+codigo+" ? "+expenses.remover(codigo));
+            atualizar();
+        }else{
+            JOptionPane.showMessageDialog(this.getContentPane(),"Selecione uma linha.");
+        }
+    }//GEN-LAST:event_excluirActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton_cadastrar;
-    private javax.swing.JButton jButton_editar;
-    private javax.swing.JButton jButton_sair;
+    private javax.swing.JButton cadastrar;
+    private javax.swing.JToggleButton excluir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JButton sair;
+    private javax.swing.JTable tabela;
+    private javax.swing.JButton visualizar;
     // End of variables declaration//GEN-END:variables
 }
