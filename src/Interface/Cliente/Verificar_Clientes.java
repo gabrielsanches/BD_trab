@@ -183,7 +183,7 @@ public class Verificar_Clientes extends javax.swing.JFrame {
         int linha = tabela.getSelectedRow();
         if (linha != -1) {
             DefaultTableModel tabela1 = (DefaultTableModel) tabela.getModel();
-            Long codigo = (Long) tabela1.getValueAt(linha, 0);
+            long codigo = (long) tabela1.getValueAt(linha, 0);
             Cliente cli = cliented.buscar(codigo);
             Visualizar_C Ver = new Visualizar_C(cli,cliented);
             Ver.setVisible(true);
@@ -197,7 +197,7 @@ public class Verificar_Clientes extends javax.swing.JFrame {
         int linha = tabela.getSelectedRow();
         if (linha != -1) {
             DefaultTableModel tabela1 = (DefaultTableModel) tabela.getModel();
-            Long codigo = (Long) tabela1.getValueAt(linha, 0);
+            long codigo = (long) tabela1.getValueAt(linha, 0);
             System.out.println("Excluiu id = "+codigo+" ? "+cliented.remover(codigo));
             atualizar();
         }else{

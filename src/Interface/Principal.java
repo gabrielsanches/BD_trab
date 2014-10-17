@@ -16,6 +16,8 @@ import Interface.Vendas.Verificar_V;
 import conexão.DAOconf;
 import controle.ClienteDAO;
 import controle.DAOFactory;
+import controle.ProdutoDAO;
+import controle.VendasDAO;
 import controle.memoria.MemoriaDAOFactory;
 
 /**
@@ -26,6 +28,8 @@ public class Principal extends javax.swing.JFrame {
 
     DAOFactory dao = new MemoriaDAOFactory();
     ClienteDAO clientedao = dao.getClienteDAO();
+    VendasDAO vendasdao = dao.getVendasDAO();
+    ProdutoDAO produtodao = dao.getProdutoDAO();
     
     /**
      * Creates new form Principal
@@ -53,7 +57,7 @@ public class Principal extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         cliente = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        venda = new javax.swing.JButton();
         despesas = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -97,10 +101,10 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jButton6.setText("Vendas");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        venda.setText("Vendas");
+        venda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                vendaActionPerformed(evt);
             }
         });
 
@@ -126,7 +130,7 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(venda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(despesas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -151,7 +155,7 @@ public class Principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cliente)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton6)
+                .addComponent(venda)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(despesas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -191,11 +195,11 @@ public class Principal extends javax.swing.JFrame {
         Ver.setVisible(true);
     }//GEN-LAST:event_clienteActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void vendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vendaActionPerformed
         // TODO add your handling code here:
-        Verificar_V Ver = new Verificar_V();
-        Ver.setVisible(true);
-    }//GEN-LAST:event_jButton6ActionPerformed
+        Verificar_V vendas = new Verificar_V(vendasdao,clientedao,produtodao);
+        vendas.setVisible(true);
+    }//GEN-LAST:event_vendaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -250,9 +254,9 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton venda;
     // End of variables declaration//GEN-END:variables
 }

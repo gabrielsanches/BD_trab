@@ -3,11 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Interface.Vendas;
 
+import controle.ClienteDAO;
+import controle.ProdutoDAO;
+import controle.VendasDAO;
+import entidades.Cliente;
+import entidades.Vendas;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -16,35 +24,55 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Verificar_V extends javax.swing.JFrame {
 
+    VendasDAO vendas;
+    ClienteDAO clientes;
+    ProdutoDAO produtos;
+
     /**
      * Creates new form Verificar_Vendas
      */
-    public Verificar_V() {
+    public void atualizar() {
+        DefaultTableModel tabela = (DefaultTableModel) tabela_venda.getModel();
+        int max = tabela.getRowCount();
+        for (int i = 0; i < max; i++) {
+            tabela.removeRow(0);
+        }
+
+        List<Vendas> listT = vendas.listarTodos();
+        for (Vendas a : listT) {
+            Object[] linha = {a.getId(), a.getN_parcela(), a.getFk_cliente(), a.getValor_total(), a.getData().toString()};
+            tabela.addRow(linha);
+        }
+    }
+
+    public Verificar_V(VendasDAO vendasdao, ClienteDAO clientedao, ProdutoDAO produtodao) {
+        vendas = vendasdao;
+        clientes = clientedao;
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle("Vendas");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        
-        ArrayList<Integer> listTeste = new ArrayList<>();
-        listTeste.add(1);
-        listTeste.add(3);
-        listTeste.add(5);
-        listTeste.add(2);
-        listTeste.add(2);
-        listTeste.add(2);
-        listTeste.add(2);
-        listTeste.add(2);
-        listTeste.add(2);
-        listTeste.add(2);
-        listTeste.add(2);
-        DefaultTableModel tabela = (DefaultTableModel) jTable_tabela.getModel();
-        if(!listTeste.isEmpty()){
-            for(Integer a: listTeste){
-                Object[] linha = {a,a,a,a,a};
-                tabela.addRow(linha);
-            }
+
+        DefaultTableModel tabela_aux = (DefaultTableModel) tabela_clientes.getModel();
+        int max = tabela_aux.getRowCount();
+        for (int i = 0; i < max; i++) {
+            tabela_aux.removeRow(0);
         }
+
+        List<Cliente> listTeste = clientes.listarTodos();
+        for (Cliente a : listTeste) {
+            Object[] linha = {a.getId(), a.getNome()};
+            tabela_aux.addRow(linha);
+        }
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowActivated(WindowEvent e) {
+                atualizar();
+            }
+        });
+
     }
 
     /**
@@ -58,24 +86,24 @@ public class Verificar_V extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable_tabela = new javax.swing.JTable();
+        tabela_venda = new javax.swing.JTable();
         visualizar = new javax.swing.JButton();
         cadastrar = new javax.swing.JButton();
         fechar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabela_clientes = new javax.swing.JTable();
         excluir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Vendas");
 
-        jTable_tabela.setModel(new javax.swing.table.DefaultTableModel(
+        tabela_venda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Codigo da Venda", "Numero Parcela", "Codigo do Cliente", "Valor Total", "Status"
+                "Codigo da Venda", "Numero Parcela", "Codigo do Cliente", "Valor Total", "Data"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -86,7 +114,7 @@ public class Verificar_V extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable_tabela);
+        jScrollPane1.setViewportView(tabela_venda);
 
         visualizar.setText("Visualizar");
         visualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -109,7 +137,7 @@ public class Verificar_V extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabela_clientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -125,7 +153,7 @@ public class Verificar_V extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(tabela_clientes);
 
         excluir.setText("Excluir");
         excluir.addActionListener(new java.awt.event.ActionListener() {
@@ -150,8 +178,8 @@ public class Verificar_V extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(227, 227, 227)
                 .addComponent(visualizar)
                 .addGap(18, 18, 18)
                 .addComponent(cadastrar)
@@ -159,7 +187,7 @@ public class Verificar_V extends javax.swing.JFrame {
                 .addComponent(excluir)
                 .addGap(18, 18, 18)
                 .addComponent(fechar)
-                .addGap(229, 229, 229))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,13 +215,31 @@ public class Verificar_V extends javax.swing.JFrame {
     }//GEN-LAST:event_fecharActionPerformed
 
     private void visualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizarActionPerformed
-        // TODO add your handling code here:
+        int linha = tabela_venda.getSelectedRow();
+        if (linha != -1) {
+            DefaultTableModel tabela1 = (DefaultTableModel) tabela_venda.getModel();
+            Long codigo = (Long) tabela1.getValueAt(linha, 0);
+            Vendas venda = vendas.buscar(codigo);
+            Visualizar_Venda Ver = new Visualizar_Venda(venda, clientes, produtos);
+            Ver.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this.getContentPane(), "Selecione uma linha.");
+        }
     }//GEN-LAST:event_visualizarActionPerformed
 
     private void cadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarActionPerformed
         // TODO add your handling code here:
-        Cadastrar_Venda Ver = new Cadastrar_Venda();
-        Ver.setVisible(true);
+
+        int linha = tabela_clientes.getSelectedRow();
+        if (linha != -1) {
+            DefaultTableModel tabela1 = (DefaultTableModel) tabela_clientes.getModel();
+            long codigo = (long) tabela1.getValueAt(linha, 0);            
+            Cadastrar_Venda Ver = new Cadastrar_Venda(codigo,vendas,produtos);
+            Ver.setVisible(true);            
+        }else{
+            JOptionPane.showMessageDialog(this.getContentPane(), "Selecione uma linha em cliente.");
+        }
+
     }//GEN-LAST:event_cadastrarActionPerformed
 
     private void excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirActionPerformed
@@ -208,8 +254,8 @@ public class Verificar_V extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable_tabela;
+    private javax.swing.JTable tabela_clientes;
+    private javax.swing.JTable tabela_venda;
     private javax.swing.JButton visualizar;
     // End of variables declaration//GEN-END:variables
 }
