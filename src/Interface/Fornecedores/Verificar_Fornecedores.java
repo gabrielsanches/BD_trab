@@ -3,11 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Interface.Fornecedores;
 
+import controle.FabricanteDAO;
+import controle.FornecedorDAO;
+import entidades.Fabricante;
+import entidades.Fornecedor;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -16,39 +23,55 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Verificar_Fornecedores extends javax.swing.JFrame {
 
+    FornecedorDAO fornecedores;
+    FabricanteDAO fabricantes;
+
     /**
      * Creates new form Verificar_Fornecedores
      */
-    public Verificar_Fornecedores() {
+
+    public void atualizar() {
+        DefaultTableModel tabela_aux = (DefaultTableModel) tabela_fornecedores.getModel();
+        int max = tabela_aux.getRowCount();
+        for (int i = 0; i < max; i++) {
+            tabela_aux.removeRow(0);
+        }
+
+        java.util.List<Fornecedor> listTeste = fornecedores.listarTodos();
+        for (Fornecedor a : listTeste) {
+            Object[] linha = {a.getId(), a.getNome(), a.getSobrenome(), a.getTelefone(), a.getEmail(), a.getFk_fabricante()};
+            tabela_aux.addRow(linha);
+        }
+    }
+
+    public Verificar_Fornecedores(FornecedorDAO fornecedordao, FabricanteDAO fabricantedao) {
+        fornecedores = fornecedordao;
+        fabricantes = fabricantedao;
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle("Fornecedores");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        
-        
-        //listar os fornecedores
-        
-                //Teste
-        ArrayList<Integer> listTeste = new ArrayList<>();
-        listTeste.add(1);
-        listTeste.add(3);
-        listTeste.add(5);
-        listTeste.add(2);
-        listTeste.add(2);
-        listTeste.add(2);
-        listTeste.add(2);
-        listTeste.add(2);
-        listTeste.add(2);
-        listTeste.add(2);
-        listTeste.add(2);
-        DefaultTableModel tabela = (DefaultTableModel) jTable_tabela.getModel();
-        if(!listTeste.isEmpty()){
-            for(Integer a: listTeste){
-                Object[] linha = {a,a,a,a};
-                tabela.addRow(linha);
-            }
+
+        DefaultTableModel tabela_aux = (DefaultTableModel) tabela_fabricante.getModel();
+        int max = tabela_aux.getRowCount();
+        for (int i = 0; i < max; i++) {
+            tabela_aux.removeRow(0);
         }
+
+        List<Fabricante> listTeste = fabricantes.listarTodos();
+        for (Fabricante a : listTeste) {
+            Object[] linha = {a.getId(), a.getNome()};
+            tabela_aux.addRow(linha);
+        }
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowActivated(WindowEvent e) {
+                atualizar();
+            }
+        });
+
     }
 
     /**
@@ -62,17 +85,20 @@ public class Verificar_Fornecedores extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable_tabela = new javax.swing.JTable();
-        jButton_visualizar = new javax.swing.JButton();
-        jButton_fechar = new javax.swing.JButton();
-        jButton_cadastrar = new javax.swing.JButton();
-        jButton_excluir = new javax.swing.JButton();
+        tabela_fornecedores = new javax.swing.JTable();
+        visualizar = new javax.swing.JButton();
+        fechar = new javax.swing.JButton();
+        cadastrar = new javax.swing.JButton();
+        excluir = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabela_fabricante = new javax.swing.JTable();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Fornecedores");
 
-        jTable_tabela.setModel(new javax.swing.table.DefaultTableModel(
+        tabela_fornecedores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -88,110 +114,158 @@ public class Verificar_Fornecedores extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable_tabela);
+        jScrollPane1.setViewportView(tabela_fornecedores);
 
-        jButton_visualizar.setText("Visualizar");
-        jButton_visualizar.addActionListener(new java.awt.event.ActionListener() {
+        visualizar.setText("Visualizar");
+        visualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_visualizarActionPerformed(evt);
+                visualizarActionPerformed(evt);
             }
         });
 
-        jButton_fechar.setText("Fechar");
-        jButton_fechar.addActionListener(new java.awt.event.ActionListener() {
+        fechar.setText("Fechar");
+        fechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_fecharActionPerformed(evt);
+                fecharActionPerformed(evt);
             }
         });
 
-        jButton_cadastrar.setText("Cadastrar");
-        jButton_cadastrar.addActionListener(new java.awt.event.ActionListener() {
+        cadastrar.setText("Cadastrar");
+        cadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_cadastrarActionPerformed(evt);
+                cadastrarActionPerformed(evt);
             }
         });
 
-        jButton_excluir.setText("Excluir");
-        jButton_excluir.addActionListener(new java.awt.event.ActionListener() {
+        excluir.setText("Excluir");
+        excluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_excluirActionPerformed(evt);
+                excluirActionPerformed(evt);
             }
         });
+
+        tabela_fabricante.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Fabricante"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tabela_fabricante);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(192, 192, 192)
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(visualizar)
+                .addGap(18, 18, 18)
+                .addComponent(cadastrar)
+                .addGap(18, 18, 18)
+                .addComponent(excluir)
+                .addGap(18, 18, 18)
+                .addComponent(fechar)
+                .addGap(191, 191, 191))
             .addGroup(layout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addComponent(jButton_visualizar)
-                .addGap(18, 18, 18)
-                .addComponent(jButton_cadastrar)
-                .addGap(18, 18, 18)
-                .addComponent(jButton_excluir)
-                .addGap(18, 18, 18)
-                .addComponent(jButton_fechar)
+                .addGap(322, 322, 322)
+                .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton_visualizar)
-                    .addComponent(jButton_fechar)
-                    .addComponent(jButton_cadastrar)
-                    .addComponent(jButton_excluir))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(visualizar)
+                    .addComponent(fechar)
+                    .addComponent(cadastrar)
+                    .addComponent(excluir))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton_fecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_fecharActionPerformed
+    private void fecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fecharActionPerformed
         dispose();
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton_fecharActionPerformed
+    }//GEN-LAST:event_fecharActionPerformed
 
-    private void jButton_visualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_visualizarActionPerformed
-        // TODO add your handling code here:
-        Visualizar_Fornecedor Ver = new Visualizar_Fornecedor();
+    private void visualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizarActionPerformed
+        int linha = tabela_fornecedores.getSelectedRow();
+        if (linha != -1) {
+            DefaultTableModel tabela1 = (DefaultTableModel) tabela_fornecedores.getModel();
+            Long codigo = (Long) tabela1.getValueAt(linha, 0);
+            Fornecedor fornecedor = fornecedores.buscar(codigo);
+            Visualizar_Fornecedor Ver = new Visualizar_Fornecedor(fornecedor,fornecedores);
+            Ver.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this.getContentPane(), "Selecione uma linha.");
+        }
+
+    }//GEN-LAST:event_visualizarActionPerformed
+
+    private void cadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarActionPerformed
+        int linha = tabela_fabricante.getSelectedRow();
+        if (linha != -1) {
+            DefaultTableModel tabela1 = (DefaultTableModel) tabela_fabricante.getModel();
+            long codigo = (long) tabela1.getValueAt(linha, 0);
+            Cadastrar_fornecedor Ver = new Cadastrar_fornecedor(codigo,fornecedores);
         Ver.setVisible(true);
-    }//GEN-LAST:event_jButton_visualizarActionPerformed
+        } else {
+            JOptionPane.showMessageDialog(this.getContentPane(), "Selecione uma linha em fabricante.");
+        }
+        atualizar();
 
-    private void jButton_cadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_cadastrarActionPerformed
-        // TODO add your handling code here:
-        Cadastrar_fornecedor Ver = new Cadastrar_fornecedor();
-        Ver.setVisible(true);
-    }//GEN-LAST:event_jButton_cadastrarActionPerformed
+    }//GEN-LAST:event_cadastrarActionPerformed
 
-    private void jButton_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_excluirActionPerformed
-        // TODO add your handling code here:
-        Excluir_fornecedor ex = new Excluir_fornecedor();
-        ex.setVisible(true);
-    }//GEN-LAST:event_jButton_excluirActionPerformed
+    private void excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirActionPerformed
+        int linha = tabela_fornecedores.getSelectedRow();
+        if (linha != -1) {
+            DefaultTableModel tabela1 = (DefaultTableModel) tabela_fornecedores.getModel();
+            Long codigo = (Long) tabela1.getValueAt(linha, 0);
+            System.out.println("Excluiu Fornecedor? "+fornecedores.remover(codigo));
+            atualizar();
+        }else{
+            JOptionPane.showMessageDialog(this.getContentPane(),"Selecione uma linha.");
+        }
+    }//GEN-LAST:event_excluirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton_cadastrar;
-    private javax.swing.JButton jButton_excluir;
-    private javax.swing.JButton jButton_fechar;
-    private javax.swing.JButton jButton_visualizar;
+    private javax.swing.JButton cadastrar;
+    private javax.swing.JButton excluir;
+    private javax.swing.JButton fechar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable_tabela;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTable tabela_fabricante;
+    private javax.swing.JTable tabela_fornecedores;
+    private javax.swing.JButton visualizar;
     // End of variables declaration//GEN-END:variables
 }

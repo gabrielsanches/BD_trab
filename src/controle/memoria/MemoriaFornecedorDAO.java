@@ -42,7 +42,7 @@ class MemoriaFornecedorDAO implements FornecedorDAO {
     public boolean inserir(Fornecedor t) {
         String insert = "INSERT INTO fornecedor (nome,sobrenome,telefone,e_mail,cpf,rg,fk_fabricante)"
                 + " VALUES (\'" + t.getNome() + "\',\'" + t.getSobrenome() + "\',\'"
-                + t.getTelefone() + "\',\'" + t.getEmail() + "\'," + t.getCpf() + "," + t.getRg() + ","
+                + t.getTelefone() + "\',\'" + t.getEmail() + "\',\'" + t.getCpf() + "\',\'" + t.getRg() + "\',"
                 + t.getFk_fabricante()+ ")";
         try {
             DAOconf.execute(insert);

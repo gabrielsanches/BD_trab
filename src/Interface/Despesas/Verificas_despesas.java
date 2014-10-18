@@ -9,6 +9,7 @@ import controle.DespesaDAO;
 import entidades.Despesa;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -49,8 +50,11 @@ public class Verificas_despesas extends javax.swing.JFrame {
 
         List<Despesa> listTeste = expenses.listarTodos();
         for (Despesa a : listTeste) {
-            Object[] linha = {a.getId(), a.getDescricao(), a.getMulta(), a.getTaxas(), a.isFixa(), a.getForma()
-                    , a.getData_venc(), a.getData_pagamento(), a.getValor_pagar(), a.getN_parcelas()};
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String data_vencimento = null;
+        data_vencimento = sdf.format(a.getData_venc());            
+            Object[] linha = {a.getId(), a.getDescricao(), a.getValor_pagar(), data_vencimento, a.getTaxas(), a.getMulta()
+                    , "Arrumar essa coluna"};
             tabela_aux.addRow(linha);
         }
     }

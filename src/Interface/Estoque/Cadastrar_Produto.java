@@ -6,6 +6,8 @@
 
 package Interface.Estoque;
 
+import controle.ProdutoDAO;
+import entidades.Produto;
 import javax.swing.JFrame;
 
 /**
@@ -14,24 +16,19 @@ import javax.swing.JFrame;
  */
 public class Cadastrar_Produto extends javax.swing.JFrame {
 
+    long cod_fab;
+    ProdutoDAO produtos;
     /**
      * Creates new form Cadastrar_Produto
      */
-    public Cadastrar_Produto() {
+    public Cadastrar_Produto(long codigo,ProdutoDAO produtodao) {
+        cod_fab = codigo;
+        produtos = produtodao;
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle("Cadastrar Produto");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-            jTextField_fabricante_codigo.setEditable(true);
-            jTextField_nome_fabricante.setEditable(false);
-            jTextField_email_fabricante.setEditable(false);
-            jFormattedTextField_telefone_fabricante.setEditable(false);
-            jTextField_nome_fornecedor.setEditable(false);
-            jTextField_sobrenome_fornecedor.setEditable(false);
-            jFormattedTextField_cpf_fornecedor.setEditable(false);
-            jFormattedTextField_rg_fornecedor.setEditable(false);
-            jTextField_email_fornecedor.setEditable(false);
     }
 
     /**
@@ -45,109 +42,58 @@ public class Cadastrar_Produto extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        cadastrar = new javax.swing.JButton();
+        cancelar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jTextField_nome_produto = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField_descricao_produto = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField_quantidade_produto = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jTextField_valor_venda = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        jTextField_valor_compra = new javax.swing.JTextField();
+        valor_compra_produto = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jCheckBox_novo_fabricante = new javax.swing.JCheckBox();
-        jTextField_fabricante_codigo = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jTextField_nome_fabricante = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        jFormattedTextField_telefone_fabricante = new javax.swing.JFormattedTextField();
-        jLabel11 = new javax.swing.JLabel();
-        jTextField_email_fabricante = new javax.swing.JTextField();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jTextField_nome_fornecedor = new javax.swing.JTextField();
-        jLabel14 = new javax.swing.JLabel();
-        jTextField_sobrenome_fornecedor = new javax.swing.JTextField();
-        jLabel15 = new javax.swing.JLabel();
-        jFormattedTextField_rg_fornecedor = new javax.swing.JFormattedTextField();
-        jLabel16 = new javax.swing.JLabel();
-        jFormattedTextField_cpf_fornecedor = new javax.swing.JFormattedTextField();
-        jLabel17 = new javax.swing.JLabel();
-        jTextField_email_fornecedor = new javax.swing.JTextField();
-        jButton_cadastrar = new javax.swing.JButton();
-        jButton_cancelar = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        quantidade_produto = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        valor_venda = new javax.swing.JTextField();
+        descricao = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        nome = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Cadastrar Produto");
 
+        cadastrar.setText("Cadastrar");
+        cadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cadastrarActionPerformed(evt);
+            }
+        });
+
+        cancelar.setText("Cancelar");
+        cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelarActionPerformed(evt);
+            }
+        });
+
         jLabel2.setText("Nome:");
 
+        jLabel7.setText("Valor de Compra:");
+
+        jLabel6.setText("Valor de Venda:");
+
+        jLabel5.setText("Quantidade:");
+
+        valor_venda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                valor_vendaActionPerformed(evt);
+            }
+        });
+
+        descricao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                descricaoActionPerformed(evt);
+            }
+        });
+
         jLabel3.setText("Descricao:");
-
-        jLabel4.setText("Quantidade:");
-
-        jLabel5.setText("Valor de Venda:");
-
-        jLabel6.setText("Valor de Compra:");
-
-        jLabel7.setText("Fabricante");
-
-        jCheckBox_novo_fabricante.setText("Novo Fabricante");
-        jCheckBox_novo_fabricante.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox_novo_fabricanteActionPerformed(evt);
-            }
-        });
-
-        jLabel8.setText("Codigo do Fabricante:");
-
-        jLabel9.setText("Nome:");
-
-        jLabel10.setText("Telefone:");
-
-        try {
-            jFormattedTextField_telefone_fabricante.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)####-####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
-        jLabel11.setText("Email:");
-
-        jLabel12.setText("Fornecedor");
-
-        jLabel13.setText("Nome:");
-
-        jLabel14.setText("Sobrenome:");
-
-        jLabel15.setText("RG:");
-
-        try {
-            jFormattedTextField_rg_fornecedor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
-        jLabel16.setText("CPF:");
-
-        try {
-            jFormattedTextField_cpf_fornecedor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
-        jLabel17.setText("Email:");
-
-        jButton_cadastrar.setText("Cadastrar");
-
-        jButton_cancelar.setText("Cancelar");
-        jButton_cancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_cancelarActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -155,96 +101,43 @@ public class Cadastrar_Produto extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(136, 136, 136)
-                                .addComponent(jLabel1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(163, 163, 163)
-                                .addComponent(jLabel7))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(158, 158, 158)
-                                .addComponent(jLabel12)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField_nome_produto))
-                            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nome)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField_descricao_produto))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
+                                .addComponent(descricao))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField_quantidade_produto, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(valor_compra_produto, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField_valor_venda, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(9, 9, 9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(quantidade_produto, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField_valor_compra, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField_nome_fabricante))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel15)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jFormattedTextField_rg_fornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(jLabel13)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField_nome_fornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel14)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField_sobrenome_fornecedor))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel16)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jFormattedTextField_cpf_fornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel17)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField_email_fornecedor))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel10)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jFormattedTextField_telefone_fabricante)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel11)
-                                        .addGap(107, 107, 107))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(78, 78, 78)
-                                        .addComponent(jButton_cadastrar)
-                                        .addGap(47, 47, 47)
-                                        .addComponent(jButton_cancelar))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jCheckBox_novo_fabricante)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel8)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField_fabricante_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jTextField_email_fabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap())
+                                .addComponent(valor_venda)))
+                        .addGap(12, 12, 12))))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(142, 142, 142)
+                        .addComponent(cadastrar)
+                        .addGap(47, 47, 47)
+                        .addComponent(cancelar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(206, 206, 206)
+                        .addComponent(jLabel1)))
+                .addContainerGap(155, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -255,130 +148,65 @@ public class Cadastrar_Produto extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField_nome_produto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField_descricao_produto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(descricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextField_quantidade_produto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(valor_compra_produto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField_valor_venda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(quantidade_produto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField_valor_compra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel7)
-                .addGap(8, 8, 8)
+                    .addComponent(valor_venda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox_novo_fabricante)
-                    .addComponent(jLabel8)
-                    .addComponent(jTextField_fabricante_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(jTextField_nome_fabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(jFormattedTextField_telefone_fabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11)
-                    .addComponent(jTextField_email_fabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel13)
-                    .addComponent(jTextField_nome_fornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14)
-                    .addComponent(jTextField_sobrenome_fornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15)
-                    .addComponent(jFormattedTextField_rg_fornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel16)
-                    .addComponent(jFormattedTextField_cpf_fornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel17)
-                    .addComponent(jTextField_email_fornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton_cadastrar)
-                    .addComponent(jButton_cancelar))
-                .addGap(0, 12, Short.MAX_VALUE))
+                    .addComponent(cadastrar)
+                    .addComponent(cancelar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_cancelarActionPerformed
-        // TODO add your handling code here:
-        dispose();
-    }//GEN-LAST:event_jButton_cancelarActionPerformed
+    private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
 
-    private void jCheckBox_novo_fabricanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_novo_fabricanteActionPerformed
+        dispose();
+    }//GEN-LAST:event_cancelarActionPerformed
+
+    private void cadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarActionPerformed
+        Produto prod = new Produto(0, nome.getText(), descricao.getText(), 
+                Integer.parseInt(quantidade_produto.getText()), Float.parseFloat(valor_venda.getText()), 
+                Float.parseFloat(valor_compra_produto.getText()), (int) cod_fab);
+        System.out.println("Inseriu produto? "+produtos.inserir(prod));
+        dispose();
+    }//GEN-LAST:event_cadastrarActionPerformed
+
+    private void valor_vendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valor_vendaActionPerformed
         // TODO add your handling code here:
-        if(jCheckBox_novo_fabricante.isSelected()){
-            jTextField_fabricante_codigo.setEditable(false);
-            jTextField_nome_fabricante.setEditable(true);
-            jTextField_email_fabricante.setEditable(true);
-            jFormattedTextField_telefone_fabricante.setEditable(true);
-            jTextField_nome_fornecedor.setEditable(true);
-            jTextField_sobrenome_fornecedor.setEditable(true);
-            jFormattedTextField_cpf_fornecedor.setEditable(true);
-            jFormattedTextField_rg_fornecedor.setEditable(true);
-            jTextField_email_fornecedor.setEditable(true);
-        }else{
-            jTextField_fabricante_codigo.setEditable(true);
-            jTextField_nome_fabricante.setEditable(false);
-            jTextField_email_fabricante.setEditable(false);
-            jFormattedTextField_telefone_fabricante.setEditable(false);
-            jTextField_nome_fornecedor.setEditable(false);
-            jTextField_sobrenome_fornecedor.setEditable(false);
-            jFormattedTextField_cpf_fornecedor.setEditable(false);
-            jFormattedTextField_rg_fornecedor.setEditable(false);
-            jTextField_email_fornecedor.setEditable(false);
-        }
-    }//GEN-LAST:event_jCheckBox_novo_fabricanteActionPerformed
+    }//GEN-LAST:event_valor_vendaActionPerformed
+
+    private void descricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descricaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_descricaoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton_cadastrar;
-    private javax.swing.JButton jButton_cancelar;
-    private javax.swing.JCheckBox jCheckBox_novo_fabricante;
-    private javax.swing.JFormattedTextField jFormattedTextField_cpf_fornecedor;
-    private javax.swing.JFormattedTextField jFormattedTextField_rg_fornecedor;
-    private javax.swing.JFormattedTextField jFormattedTextField_telefone_fabricante;
+    private javax.swing.JButton cadastrar;
+    private javax.swing.JButton cancelar;
+    private javax.swing.JTextField descricao;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField_descricao_produto;
-    private javax.swing.JTextField jTextField_email_fabricante;
-    private javax.swing.JTextField jTextField_email_fornecedor;
-    private javax.swing.JTextField jTextField_fabricante_codigo;
-    private javax.swing.JTextField jTextField_nome_fabricante;
-    private javax.swing.JTextField jTextField_nome_fornecedor;
-    private javax.swing.JTextField jTextField_nome_produto;
-    private javax.swing.JTextField jTextField_quantidade_produto;
-    private javax.swing.JTextField jTextField_sobrenome_fornecedor;
-    private javax.swing.JTextField jTextField_valor_compra;
-    private javax.swing.JTextField jTextField_valor_venda;
+    private javax.swing.JTextField nome;
+    private javax.swing.JTextField quantidade_produto;
+    private javax.swing.JTextField valor_compra_produto;
+    private javax.swing.JTextField valor_venda;
     // End of variables declaration//GEN-END:variables
 }

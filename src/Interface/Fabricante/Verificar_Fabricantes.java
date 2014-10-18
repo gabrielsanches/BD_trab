@@ -39,29 +39,6 @@ public class Verificar_Fabricantes extends javax.swing.JFrame {
             }
         });
         
-        //listar os fabricantes
-        
-                //Teste
-        /*ArrayList<Integer> listTeste = new ArrayList<>();
-        listTeste.add(1);
-        istTeste.add(3);
-        listTeste.add(5);
-        listTeste.add(2);
-        listTeste.add(2);
-        listTeste.add(2);
-        listTeste.add(2);
-        listTeste.add(2);
-        listTeste.add(2);
-        listTeste.add(2);
-        listTeste.add(2);
-        DefaultTableModel tabela = (DefaultTableModel) tabela.getModel();
-        if(!listTeste.isEmpty()){
-            for(Integer a: listTeste){
-                Object[] linha = {a,a,a,a};
-                tabela.addRow(linha);
-            }
-        }*/
-        
     }
     
     public void atualizar() {

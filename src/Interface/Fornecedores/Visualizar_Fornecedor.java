@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Interface.Fornecedores;
 
+import controle.FornecedorDAO;
+import entidades.Fornecedor;
 import javax.swing.JFrame;
 
 /**
@@ -14,23 +15,35 @@ import javax.swing.JFrame;
  */
 public class Visualizar_Fornecedor extends javax.swing.JFrame {
 
+    Fornecedor f;
+    FornecedorDAO fornecedores;
+
     /**
      * Creates new form Visualizar_Fornecedor
      */
-    public Visualizar_Fornecedor() {
+    public Visualizar_Fornecedor(Fornecedor fornecedor, FornecedorDAO fornecedordao) {
+        f = fornecedor;
+        fornecedores = fornecedordao;
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle("Fornecedor");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-            jButton_alterar.setEnabled(false);
-            jTextField_nome.setEditable(false);
-            jTextField_sobrenome.setEditable(false);
-            jTextField_email.setEditable(false);
-            jFormattedTextField_RG.setEditable(false);
-            jFormattedTextField_codigo_fabricante.setEditable(false);
-            jFormattedTextField_cpf.setEditable(false);
-            jFormattedTextField_telefone.setEditable(false);
+        
+        alterar.setEnabled(false);
+        nome.setEditable(false);
+        sobrenome.setEditable(false);
+        email.setEditable(false);
+        rg.setEditable(false);
+        cpf.setEditable(false);
+        telefone.setEditable(false);
+        
+        nome.setText(fornecedor.getNome());
+        sobrenome.setText(fornecedor.getSobrenome());
+        email.setText(fornecedor.getEmail());
+        rg.setText(fornecedor.getRg());
+        cpf.setText(fornecedor.getCpf());
+        telefone.setText(fornecedor.getTelefone());
     }
 
     /**
@@ -45,26 +58,21 @@ public class Visualizar_Fornecedor extends javax.swing.JFrame {
         jCheckBox_editar = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel2 = new javax.swing.JLabel();
-        jFormattedTextField_codigo_fornecedor = new javax.swing.JFormattedTextField();
-        jButton1 = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
-        jTextField_nome = new javax.swing.JTextField();
+        nome = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField_sobrenome = new javax.swing.JTextField();
+        sobrenome = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jFormattedTextField_RG = new javax.swing.JFormattedTextField();
+        rg = new javax.swing.JFormattedTextField();
         jLabel6 = new javax.swing.JLabel();
-        jFormattedTextField_cpf = new javax.swing.JFormattedTextField();
+        cpf = new javax.swing.JFormattedTextField();
         jLabel7 = new javax.swing.JLabel();
-        jTextField_email = new javax.swing.JTextField();
+        email = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jFormattedTextField_telefone = new javax.swing.JFormattedTextField();
-        jLabel9 = new javax.swing.JLabel();
-        jFormattedTextField_codigo_fabricante = new javax.swing.JFormattedTextField();
-        jButton_alterar = new javax.swing.JButton();
-        jButton_fechar = new javax.swing.JButton();
+        telefone = new javax.swing.JFormattedTextField();
+        alterar = new javax.swing.JButton();
+        fechar = new javax.swing.JButton();
         jCheckBox_Edit = new javax.swing.JCheckBox();
 
         jCheckBox_editar.setText("Editar");
@@ -78,16 +86,6 @@ public class Visualizar_Fornecedor extends javax.swing.JFrame {
 
         jLabel1.setText("Fornecedor");
 
-        jLabel2.setText("Codigo:");
-
-        try {
-            jFormattedTextField_codigo_fornecedor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#######")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
-        jButton1.setText("Buscar");
-
         jLabel3.setText("Nome:");
 
         jLabel4.setText("Sobrenome:");
@@ -95,7 +93,7 @@ public class Visualizar_Fornecedor extends javax.swing.JFrame {
         jLabel5.setText("RG:");
 
         try {
-            jFormattedTextField_RG.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+            rg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -103,7 +101,7 @@ public class Visualizar_Fornecedor extends javax.swing.JFrame {
         jLabel6.setText("CPF:");
 
         try {
-            jFormattedTextField_cpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+            cpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -113,25 +111,22 @@ public class Visualizar_Fornecedor extends javax.swing.JFrame {
         jLabel8.setText("Telefone:");
 
         try {
-            jFormattedTextField_telefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)####-####")));
+            telefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
 
-        jLabel9.setText("Codigo do Fabricante:");
-
-        try {
-            jFormattedTextField_codigo_fabricante.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#######")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
-        jButton_alterar.setText("Alterar");
-
-        jButton_fechar.setText("Fechar");
-        jButton_fechar.addActionListener(new java.awt.event.ActionListener() {
+        alterar.setText("Alterar");
+        alterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_fecharActionPerformed(evt);
+                alterarActionPerformed(evt);
+            }
+        });
+
+        fechar.setText("Fechar");
+        fechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fecharActionPerformed(evt);
             }
         });
 
@@ -154,55 +149,46 @@ public class Visualizar_Fornecedor extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField_sobrenome))
+                        .addComponent(sobrenome))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(136, 136, 136)
-                                .addComponent(jLabel1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jFormattedTextField_codigo_fornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1)
-                                .addGap(18, 18, 18)
-                                .addComponent(jCheckBox_Edit))
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel5)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jFormattedTextField_RG, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(rg, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jLabel6)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jFormattedTextField_cpf, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(cpf, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel7)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField_email, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel8)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jFormattedTextField_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel9)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jFormattedTextField_codigo_fabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(93, 93, 93)
-                                .addComponent(jButton_alterar)
+                                .addComponent(alterar)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton_fechar)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(fechar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(160, 160, 160)
+                                .addComponent(jCheckBox_Edit)))
+                        .addGap(0, 48, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(160, 160, 160)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -211,49 +197,43 @@ public class Visualizar_Fornecedor extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jFormattedTextField_codigo_fornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(jCheckBox_Edit))
+                .addComponent(jCheckBox_Edit)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField_nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField_sobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(sobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jFormattedTextField_RG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(jFormattedTextField_cpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jTextField_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jFormattedTextField_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)
-                    .addComponent(jFormattedTextField_codigo_fabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton_alterar)
-                    .addComponent(jButton_fechar))
-                .addGap(0, 10, Short.MAX_VALUE))
+                    .addComponent(alterar)
+                    .addComponent(fechar))
+                .addGap(0, 18, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton_fecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_fecharActionPerformed
+    private void fecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fecharActionPerformed
         // TODO add your handling code here:
         dispose();
-    }//GEN-LAST:event_jButton_fecharActionPerformed
+    }//GEN-LAST:event_fecharActionPerformed
 
     private void jCheckBox_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_editarActionPerformed
         // TODO add your handling code here:
@@ -262,51 +242,50 @@ public class Visualizar_Fornecedor extends javax.swing.JFrame {
 
     private void jCheckBox_EditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_EditActionPerformed
         // TODO add your handling code here:
-        if(jCheckBox_Edit.isSelected()){
-            jButton_alterar.setEnabled(true);
-            jTextField_nome.setEditable(true);
-            jTextField_sobrenome.setEditable(true);
-            jTextField_email.setEditable(true);
-            jFormattedTextField_RG.setEditable(true);
-            jFormattedTextField_codigo_fabricante.setEditable(true);
-            jFormattedTextField_cpf.setEditable(true);
-            jFormattedTextField_telefone.setEditable(true);
-        }else{
-            jButton_alterar.setEnabled(false);
-            jTextField_nome.setEditable(false);
-            jTextField_sobrenome.setEditable(false);
-            jTextField_email.setEditable(false);
-            jFormattedTextField_RG.setEditable(false);
-            jFormattedTextField_codigo_fabricante.setEditable(false);
-            jFormattedTextField_cpf.setEditable(false);
-            jFormattedTextField_telefone.setEditable(false);
+        if (jCheckBox_Edit.isSelected()) {
+            alterar.setEnabled(true);
+            nome.setEditable(true);
+            sobrenome.setEditable(true);
+            email.setEditable(true);
+            rg.setEditable(true);
+            cpf.setEditable(true);
+            telefone.setEditable(true);
+        } else {
+            alterar.setEnabled(false);
+            nome.setEditable(false);
+            sobrenome.setEditable(false);
+            email.setEditable(false);
+            rg.setEditable(false);
+            cpf.setEditable(false);
+            telefone.setEditable(false);
         }
     }//GEN-LAST:event_jCheckBox_EditActionPerformed
 
+    private void alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarActionPerformed
+        Fornecedor fornece = new Fornecedor(0, nome.getText(), sobrenome.getText(), telefone.getText(), 
+                email.getText(), cpf.getText(), rg.getText(), f.getFk_fabricante());
+        System.out.println("Alterou fabricante?"+fornecedores.atualizar(f.getId(), fornece));
+    }//GEN-LAST:event_alterarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton_alterar;
-    private javax.swing.JButton jButton_fechar;
+    private javax.swing.JButton alterar;
+    private javax.swing.JFormattedTextField cpf;
+    private javax.swing.JTextField email;
+    private javax.swing.JButton fechar;
     private javax.swing.JCheckBox jCheckBox_Edit;
     private javax.swing.JCheckBox jCheckBox_editar;
-    private javax.swing.JFormattedTextField jFormattedTextField_RG;
-    private javax.swing.JFormattedTextField jFormattedTextField_codigo_fabricante;
-    private javax.swing.JFormattedTextField jFormattedTextField_codigo_fornecedor;
-    private javax.swing.JFormattedTextField jFormattedTextField_cpf;
-    private javax.swing.JFormattedTextField jFormattedTextField_telefone;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField jTextField_email;
-    private javax.swing.JTextField jTextField_nome;
-    private javax.swing.JTextField jTextField_sobrenome;
+    private javax.swing.JTextField nome;
+    private javax.swing.JFormattedTextField rg;
+    private javax.swing.JTextField sobrenome;
+    private javax.swing.JFormattedTextField telefone;
     // End of variables declaration//GEN-END:variables
 }
