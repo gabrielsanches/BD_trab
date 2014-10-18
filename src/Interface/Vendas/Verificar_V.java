@@ -48,6 +48,7 @@ public class Verificar_V extends javax.swing.JFrame {
     public Verificar_V(VendasDAO vendasdao, ClienteDAO clientedao, ProdutoDAO produtodao) {
         vendas = vendasdao;
         clientes = clientedao;
+        produtos = produtodao;
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
@@ -142,7 +143,7 @@ public class Verificar_V extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Nome"
+                "ID", "Cliente"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -220,7 +221,7 @@ public class Verificar_V extends javax.swing.JFrame {
             DefaultTableModel tabela1 = (DefaultTableModel) tabela_venda.getModel();
             Long codigo = (Long) tabela1.getValueAt(linha, 0);
             Vendas venda = vendas.buscar(codigo);
-            Visualizar_Venda Ver = new Visualizar_Venda(venda, clientes, produtos);
+            Visualizar_Venda Ver = new Visualizar_Venda(venda, clientes, vendas);
             Ver.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this.getContentPane(), "Selecione uma linha.");
@@ -243,7 +244,15 @@ public class Verificar_V extends javax.swing.JFrame {
     }//GEN-LAST:event_cadastrarActionPerformed
 
     private void excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirActionPerformed
-        // TODO add your handling code here:
+        int linha = tabela_venda.getSelectedRow();
+        if (linha != -1) {
+            DefaultTableModel tabela1 = (DefaultTableModel) tabela_venda.getModel();
+            long codigo = (long) tabela1.getValueAt(linha, 0);
+            System.out.println("Excluiu id = "+codigo+" ? "+vendas.remover(codigo));
+            atualizar();
+        }else{
+            JOptionPane.showMessageDialog(this.getContentPane(),"Selecione uma linha.");
+        }
     }//GEN-LAST:event_excluirActionPerformed
 
 

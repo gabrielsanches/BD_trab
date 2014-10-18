@@ -44,18 +44,19 @@ public class Cadastrar_Venda extends javax.swing.JFrame {
         DefaultTableModel tabela = (DefaultTableModel) tabela_venda.getModel();
 
         int max = tabela.getRowCount();
-        valor_t=0;
-        
-        for (int i=0;i<max;i++) {
-            valor_t+=(long)tabela.getValueAt(i, 2);
+        valor_t = 0;
+
+        for (int i = 0; i < max; i++) {
+            valor_t += (float) tabela.getValueAt(i, 2) * (int) tabela.getValueAt(i, 3);
         }
-        valor_total.setText(""+valor_t);
+        valor_total.setText("" + valor_t);
     }
 
     public Cadastrar_Venda(long codigo, VendasDAO vendasdao, ProdutoDAO produtodao) {
         vendas = vendasdao;
         produtos = produtodao;
         cod_cliente = codigo;
+
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
@@ -68,14 +69,13 @@ public class Cadastrar_Venda extends javax.swing.JFrame {
             tabela.removeRow(0);
         }
 
-        
         List<Produto> listT = produtos.listarTodos();
         for (Produto a : listT) {
             Object[] linha = {a.getId(), a.getNome(), a.getValor_venda(), a.getQuantidade()};
             tabela.addRow(linha);
-            
-        }        
-        
+
+        }
+
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowActivated(WindowEvent e) {
@@ -321,7 +321,6 @@ public class Cadastrar_Venda extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this.getContentPane(), "Digite uma entrada valida");
             } else {
                 int quantidade = Integer.parseInt(aux);
-                System.out.println(quantidade);
                 int quant_prod = (int) tabela1.getValueAt(linha, 3);
                 if (quant_prod < quantidade) {
                     JOptionPane.showMessageDialog(this.getContentPane(), "Digite uma quantidade valida");
@@ -331,19 +330,24 @@ public class Cadastrar_Venda extends javax.swing.JFrame {
                     int max = tabela2.getRowCount();
                     int cod = -1;
                     for (int i = 0; i < max; i++) {
-                        if (codigo == (int) tabela2.getValueAt(i, 0)) {
+                        if (codigo == (long) tabela2.getValueAt(i, 0)) {
                             cod = i;
                         }
                     }
-
-                    tabela1.setValueAt(quantidade - quant_prod, linha, 3);
-                    Object[] obj = {linha, tabela1.getValueAt(linha, 1), tabela1.getValueAt(linha, 2), quant_prod};
-                    tabela1.addRow(obj);
+                    if (cod == -1) {
+                        tabela1.setValueAt(quant_prod - quantidade, linha, 3);
+                        Object[] obj = {tabela1.getValueAt(linha, 0), tabela1.getValueAt(linha, 1), tabela1.getValueAt(linha, 2), quantidade};
+                        tabela2.addRow(obj);
+                    } else {
+                        tabela1.setValueAt(quant_prod - quantidade, linha, 3);
+                        tabela2.setValueAt((int)tabela2.getValueAt(cod, 3)+quantidade, cod, 3);                  
+                    }
                 }
             }
         } else {
             JOptionPane.showMessageDialog(this.getContentPane(), "Selecione um produto.");
         }
+        atualizar();
     }//GEN-LAST:event_menorActionPerformed
 
     private void maiorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maiorActionPerformed
@@ -358,7 +362,7 @@ public class Cadastrar_Venda extends javax.swing.JFrame {
             int max = tabela1.getRowCount();
             int aux = -1;
             for (int i = 0; i < max; i++) {
-                if (codigo == (int) tabela1.getValueAt(i, 0)) {
+                if (codigo == (long) tabela1.getValueAt(i, 0)) {
                     aux = i;
                 }
             }
@@ -367,6 +371,7 @@ public class Cadastrar_Venda extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this.getContentPane(), "Selecione um produto.");
         }
+        atualizar();
     }//GEN-LAST:event_maiorActionPerformed
 
     private void n_parcelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_n_parcelasActionPerformed
@@ -379,11 +384,6 @@ public class Cadastrar_Venda extends javax.swing.JFrame {
 
     private void cadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarActionPerformed
         DefaultTableModel tabela2 = (DefaultTableModel) tabela_venda.getModel();
-        int max = tabela2.getRowCount();
-        valor_t = 0;
-        for (int i = 0; i < max; i++) {
-            valor_t += (float) tabela2.getValueAt(i, 2);
-        }
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date data_nascimento = null;
         try {
@@ -397,7 +397,7 @@ public class Cadastrar_Venda extends javax.swing.JFrame {
         String insert = "INSERT INTO venda (forma,data,multa,n_parcela,valor_total, fk_cliente)"
                 + " VALUES (\'" + venda.getForma() + "\',\'" + venda.getData() + "\',"
                 + venda.getMulta() + "," + venda.getN_parcela() + "," + venda.getValor_total() + "," + venda.getFk_cliente() + ") returning id";
-        
+
         long id_venda = 0;
         try {
             ResultSet insc = DAOconf.Consulta(insert);
@@ -406,27 +406,32 @@ public class Cadastrar_Venda extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(Cadastrar_Venda.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        max = tabela2.getRowCount();
-        for(int i = 0; i < max; i++){
+
+        int max = tabela2.getRowCount();
+        for (int i = 0; i < max; i++) {
             long cod = (long) tabela2.getValueAt(i, 0);
             insert = "insert into produto_venda (id_venda,id_produto,quantidade) Values "
-                    + "("+id_venda+", "+cod+", "+tabela2.getValueAt(i, 2)+")";
+                    + "(" + id_venda + ", " + cod + ", " + tabela2.getValueAt(i, 3) + ")";
             try {
                 DAOconf.execute(insert);
             } catch (SQLException ex) {
                 Logger.getLogger(Cadastrar_Venda.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
         DefaultTableModel tabela1 = (DefaultTableModel) tabela_produto.getModel();
         max = tabela1.getRowCount();
-        for(int i = 0; i < max; i++){
-            long cod = (long) tabela2.getValueAt(i, 0);
+        for (int i = 0; i < max; i++) {
+            long cod = (long) tabela1.getValueAt(i, 0);
             insert = "update produto set "
-                    + "quantidade="+tabela2.getValueAt(i, 2)+" where id="+cod;           
+                    + "quantidade=" + tabela1.getValueAt(i, 3) + " where id=" + cod;
+            try {
+                DAOconf.execute(insert);
+            } catch (SQLException ex) {
+                Logger.getLogger(Cadastrar_Venda.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        
+        dispose();
     }//GEN-LAST:event_cadastrarActionPerformed
 
 

@@ -83,7 +83,6 @@ public class Visualizar_C extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         alterar = new javax.swing.JButton();
         fechar = new javax.swing.JButton();
-        edit = new javax.swing.JCheckBox();
         nome = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         cidade = new javax.swing.JTextField();
@@ -134,13 +133,6 @@ public class Visualizar_C extends javax.swing.JFrame {
         fechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fecharActionPerformed(evt);
-            }
-        });
-
-        edit.setText("Editar");
-        edit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editActionPerformed(evt);
             }
         });
 
@@ -274,9 +266,6 @@ public class Visualizar_C extends javax.swing.JFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(cpf, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(220, 220, 220)
-                        .addComponent(edit))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(229, 229, 229)
                         .addComponent(jLabel1)))
                 .addContainerGap(39, Short.MAX_VALUE))
@@ -287,9 +276,7 @@ public class Visualizar_C extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(1, 1, 1)
-                .addComponent(edit)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(29, 29, 29)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -353,39 +340,6 @@ public class Visualizar_C extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jCheckBox_EditarActionPerformed
 
-    private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
-        // TODO add your handling code here:
-        if (edit.isSelected()) {
-            nome.setEditable(true);
-            sobrenome.setEditable(true);
-            data_nasc.setEditable(true);
-            telefone.setEditable(true);
-            rg.setEditable(true);
-            cpf.setEditable(true);
-            rua.setEditable(true);
-            bairro.setEditable(true);
-            numero.setEditable(true);
-            complemento.setEditable(true);
-            cidade.setEditable(true);
-            uf.setEditable(true);
-            alterar.setEnabled(true);
-        } else {
-            nome.setEditable(false);
-            sobrenome.setEditable(false);
-            data_nasc.setEditable(false);
-            telefone.setEditable(false);
-            rg.setEditable(false);
-            cpf.setEditable(false);
-            rua.setEditable(false);
-            bairro.setEditable(false);
-            numero.setEditable(false);
-            complemento.setEditable(false);
-            cidade.setEditable(false);
-            uf.setEditable(false);
-            alterar.setEnabled(false);
-        }
-    }//GEN-LAST:event_editActionPerformed
-
     private void alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarActionPerformed
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date data_nascimento = null;
@@ -409,7 +363,6 @@ public class Visualizar_C extends javax.swing.JFrame {
     private javax.swing.JTextField complemento;
     private javax.swing.JFormattedTextField cpf;
     private javax.swing.JFormattedTextField data_nasc;
-    private javax.swing.JCheckBox edit;
     private javax.swing.JTextField email;
     private javax.swing.JButton fechar;
     private javax.swing.JCheckBox jCheckBox_Editar;

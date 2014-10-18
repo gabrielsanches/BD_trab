@@ -202,6 +202,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void vendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vendaActionPerformed
         // TODO add your handling code here:
+        
         Verificar_V vendas = new Verificar_V(vendasdao,clientedao,produtodao);
         vendas.setVisible(true);
     }//GEN-LAST:event_vendaActionPerformed

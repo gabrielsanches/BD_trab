@@ -42,7 +42,6 @@ public class DAOconf {
             try {
                 return Comando.executeQuery(Consulta);
             } catch (PSQLException ex) {
-                System.out.println("ERROR");
                 Logger.getLogger(DAOconf.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
