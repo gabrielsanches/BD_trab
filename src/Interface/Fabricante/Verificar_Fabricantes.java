@@ -195,7 +195,7 @@ public class Verificar_Fabricantes extends javax.swing.JFrame {
 
     private void cadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarActionPerformed
         // TODO add your handling code here:
-        Editar_Fabricante Edit = new Editar_Fabricante();
+        Cadastrar_Fabricante Edit = new Cadastrar_Fabricante();
         Edit.setVisible(true);
 //        while(!Edit.isActive());
 //        
@@ -210,8 +210,6 @@ public class Verificar_Fabricantes extends javax.swing.JFrame {
             DefaultTableModel tabela1 = (DefaultTableModel) tabela.getModel();
             Long codigo = (Long) tabela1.getValueAt(linha, 0);
             System.out.println("Excluiu? "+manufacturer.remover(codigo));
-            Excluir_fabricante ex = new Excluir_fabricante();
-            ex.setVisible(true);
         }else{
             JOptionPane.showMessageDialog(this.getContentPane(),"Selecione uma linha.");
         }

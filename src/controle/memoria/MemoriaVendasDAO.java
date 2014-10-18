@@ -38,7 +38,7 @@ class MemoriaVendasDAO implements VendasDAO {
             c.setAtivo(rs.getBoolean(8));
             return c;
         } catch (SQLException ex) {
-            Logger.getLogger(MemoriaCaixaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MemoriaVendasDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -52,7 +52,7 @@ class MemoriaVendasDAO implements VendasDAO {
             DAOconf.execute(insert);
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(MemoriaCaixaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MemoriaVendasDAO.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
@@ -69,7 +69,7 @@ class MemoriaVendasDAO implements VendasDAO {
                 return true;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(MemoriaCaixaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MemoriaVendasDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
@@ -84,7 +84,7 @@ class MemoriaVendasDAO implements VendasDAO {
             DAOconf.execute(insert);
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(MemoriaCaixaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MemoriaVendasDAO.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
@@ -102,7 +102,7 @@ class MemoriaVendasDAO implements VendasDAO {
             Collections.sort(cliente2);
             return cliente2;
         } catch (SQLException ex) {
-            Logger.getLogger(MemoriaClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MemoriaVendasDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

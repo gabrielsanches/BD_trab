@@ -19,10 +19,10 @@ public class Vendas implements Comparable<Vendas>{
     private float multa;
     private int n_parcela;
     private float valor_total;
-    private int fk_cliente;    
+    private long fk_cliente;    
     private boolean ativo;    
 
-    public Vendas(long id, String forma, Date data, float multa, int n_parcela, float valor_total, int fk_cliente) {
+    public Vendas(long id, String forma, Date data, float multa, int n_parcela, float valor_total, long fk_cliente) {
         this.id = id;
         this.forma = forma;
         this.data = data;
@@ -33,19 +33,11 @@ public class Vendas implements Comparable<Vendas>{
         ativo = true;
     }
 
-    public boolean isAtivo() {
-        return ativo;
-    }
-
-    public void setAtivo(boolean ativo) {
-        this.ativo = ativo;
-    }   
-    
     public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -89,13 +81,23 @@ public class Vendas implements Comparable<Vendas>{
         this.valor_total = valor_total;
     }
 
-    public int getFk_cliente() {
+    public long getFk_cliente() {
         return fk_cliente;
     }
 
-    public void setFk_cliente(int fk_cliente) {
+    public void setFk_cliente(long fk_cliente) {
         this.fk_cliente = fk_cliente;
     }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+
+    
 
     @Override
     public String toString() {
