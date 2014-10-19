@@ -4,17 +4,70 @@
  */
 package Interface.Solicaitacao;
 
+import controle.FornecedorDAO;
+import controle.ProdutoDAO;
+import controle.SolicitacaoDAO;
+import entidades.Fornecedor;
+import entidades.Solicitacao;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Suelin
  */
 public class Verificar_Sol extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Verificar_Sol
-     */
-    public Verificar_Sol() {
+    SolicitacaoDAO solicitacoes;
+    ProdutoDAO produtos;
+    FornecedorDAO fornecedores;
+    
+    public void atualizar() {
+        DefaultTableModel tabela = (DefaultTableModel) tabela_solicitacao.getModel();
+        int max = tabela.getRowCount();
+        for (int i = 0; i < max; i++) {
+            tabela.removeRow(0);
+        }
+
+        List<Solicitacao> listT = solicitacoes.listarTodos();
+        for (Solicitacao a : listT) {
+            Object[] linha = {a.getId(), a.getFk_fornecedor(), a.getValor_total(), a.getData()};
+            tabela.addRow(linha);
+        }
+    }
+    
+    public Verificar_Sol(SolicitacaoDAO solicitacaodao, FornecedorDAO fornecedordao, ProdutoDAO produtodao) {
+        solicitacoes = solicitacaodao;
+        fornecedores = fornecedordao;
+        produtos = produtodao;
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
+        setTitle("Solicitações");
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        DefaultTableModel tabela_aux = (DefaultTableModel) tabela_fornecedores.getModel();
+        int max = tabela_aux.getRowCount();
+        for (int i = 0; i < max; i++) {
+            tabela_aux.removeRow(0);
+        }
+
+        List<Fornecedor> listTeste = fornecedores.listarTodos();
+        for (Fornecedor a : listTeste) {
+            Object[] linha = {a.getId(), a.getNome()};
+            tabela_aux.addRow(linha);
+        }
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowActivated(WindowEvent e) {
+                atualizar();
+            }
+        });
     }
 
     /**
@@ -85,10 +138,25 @@ public class Verificar_Sol extends javax.swing.JFrame {
         });
 
         cadastrar.setText("Cadastrar");
+        cadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cadastrarActionPerformed(evt);
+            }
+        });
 
         excluir.setText("Excluir");
+        excluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                excluirActionPerformed(evt);
+            }
+        });
 
         fechar.setText("Fechar");
+        fechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fecharActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -140,43 +208,51 @@ public class Verificar_Sol extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void visualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizarActionPerformed
-        // TODO add your handling code here:
+        int linha = tabela_solicitacao.getSelectedRow();
+        if (linha != -1) {
+            DefaultTableModel tabela1 = (DefaultTableModel) tabela_solicitacao.getModel();
+            Long codigo = (Long) tabela1.getValueAt(linha, 0);
+            Solicitacao solicitacao = solicitacoes.buscar(codigo);
+            Visualizar_Solicitacao Ver = new Visualizar_Solicitacao(solicitacao, fornecedores, solicitacoes);
+            Ver.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this.getContentPane(), "Selecione uma linha.");
+        }
     }//GEN-LAST:event_visualizarActionPerformed
+
+    private void cadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarActionPerformed
+        int linha = tabela_fornecedores.getSelectedRow();
+        if (linha != -1) {
+            DefaultTableModel tabela1 = (DefaultTableModel) tabela_fornecedores.getModel();
+            long codigo = (long) tabela1.getValueAt(linha, 0);            
+            Cadastrar_Solicitacao Ver = new Cadastrar_Solicitacao(codigo,solicitacoes,produtos);
+            Ver.setVisible(true);            
+        }else{
+            JOptionPane.showMessageDialog(this.getContentPane(), "Selecione uma linha em solicitações.");
+        }
+    }//GEN-LAST:event_cadastrarActionPerformed
+
+    private void excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirActionPerformed
+        int linha = tabela_solicitacao.getSelectedRow();
+        if (linha != -1) {
+            DefaultTableModel tabela1 = (DefaultTableModel) tabela_solicitacao.getModel();
+            long codigo = (long) tabela1.getValueAt(linha, 0);
+            System.out.println("Excluiu id = "+codigo+" ? "+solicitacoes.remover(codigo));
+            atualizar();
+        }else{
+            JOptionPane.showMessageDialog(this.getContentPane(),"Selecione uma linha.");
+        }
+    }//GEN-LAST:event_excluirActionPerformed
+
+    private void fecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fecharActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_fecharActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Verificar_Sol.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Verificar_Sol.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Verificar_Sol.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Verificar_Sol.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Verificar_Sol().setVisible(true);
-            }
-        });
-    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton cadastrar;
     private javax.swing.JToggleButton excluir;

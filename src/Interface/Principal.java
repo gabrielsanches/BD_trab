@@ -12,6 +12,7 @@ import Interface.Despesas.Verificas_despesas;
 import Interface.Estoque.Verificar_Estoque;
 import Interface.Fabricante.Verificar_Fabricantes;
 import Interface.Fornecedores.Verificar_Fornecedores;
+import Interface.Solicaitacao.Verificar_Sol;
 import Interface.Vendas.Verificar_V;
 import conexão.DAOconf;
 import controle.ClienteDAO;
@@ -21,6 +22,7 @@ import controle.VendasDAO;
 import controle.DespesaDAO;
 import controle.FabricanteDAO;
 import controle.FornecedorDAO;
+import controle.SolicitacaoDAO;
 import controle.memoria.MemoriaDAOFactory;
 
 /**
@@ -36,6 +38,7 @@ public class Principal extends javax.swing.JFrame {
     FabricanteDAO fabricantedao = dao.getFabricanteDAO();
     FornecedorDAO fornecedordao = dao.getFornecedorDAO();
     DespesaDAO despesadao = dao.getDespesaDAO();
+    SolicitacaoDAO solicitacoesdao = dao.getSolicitacaoDAO();
     /**
      * Creates new form Principal
      */
@@ -178,9 +181,9 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(solicitacoes)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -231,7 +234,8 @@ public class Principal extends javax.swing.JFrame {
 
     private void solicitacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_solicitacoesActionPerformed
         // TODO add your handling code here:
-        
+        Verificar_Sol V_Sol= new Verificar_Sol(solicitacoesdao, fornecedordao, produtodao);
+        V_Sol.setVisible(true);
     }//GEN-LAST:event_solicitacoesActionPerformed
 
     /**
