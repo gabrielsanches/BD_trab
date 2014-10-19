@@ -211,6 +211,11 @@ public class Cadastrar_Venda extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        data.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dataActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Data:");
 
@@ -433,6 +438,10 @@ public class Cadastrar_Venda extends javax.swing.JFrame {
         }
         dispose();
     }//GEN-LAST:event_cadastrarActionPerformed
+
+    private void dataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dataActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dataActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
