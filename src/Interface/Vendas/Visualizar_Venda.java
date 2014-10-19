@@ -77,7 +77,7 @@ public class Visualizar_Venda extends javax.swing.JFrame {
         n_parcelas.setText("" + venda.getN_parcela());
         multa.setText("" + venda.getMulta());
 
-        String select = "select produto.id as prod,nome,valor_venda,produto.quantidade as quant from venda "
+        String select = "select produto.id as prod,nome,valor_venda,produto_venda.quantidade as quant from venda "
                 + "inner join produto_venda on venda.id=produto_venda.id_venda "
                 + "inner join produto on produto_venda.id_produto = produto.id where venda.id = " + venda.getId();
 

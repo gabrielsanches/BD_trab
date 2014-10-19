@@ -56,7 +56,7 @@ public class Visualizar_Solicitacao extends javax.swing.JFrame {
         data.setText(data2);
         multa.setText("" + solicitacao.getMulta());
 
-        String select = "select produto.id as prod,nome,valor_solicitacao,produto.quantidade as quant from venda "
+        String select = "select produto.id as prod,nome,valor_compra,produto_solicitacao.quantidade as quant from solicitacao "
                 + "inner join produto_solicitacao on solicitacao.id=produto_solicitacao.id_solicitacao "
                 + "inner join produto on produto_solicitacao.id_produto = produto.id where solicitacao.id = " + solicitacao.getId();
 
@@ -64,7 +64,7 @@ public class Visualizar_Solicitacao extends javax.swing.JFrame {
         try {
             rs = DAOconf.Consulta(select);
             while (rs.next()) {
-                Object[] linha = {rs.getLong("prod"), rs.getString("nome"), rs.getFloat("valor_venda"), rs.getInt("quant")};
+                Object[] linha = {rs.getLong("prod"), rs.getString("nome"), rs.getFloat("valor_compra"), rs.getInt("quant")};
                 tabela_aux.addRow(linha);
             }
         } catch (SQLException ex) {

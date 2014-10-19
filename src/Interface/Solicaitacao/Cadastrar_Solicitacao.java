@@ -73,7 +73,7 @@ public class Cadastrar_Solicitacao extends javax.swing.JFrame {
 
         List<Produto> listT = produtos.listarTodos();
         for (Produto a : listT) {
-            Object[] linha = {a.getId(), a.getNome(), a.getValor_venda(), a.getQuantidade()};
+            Object[] linha = {a.getId(), a.getNome(), a.getValor_compra(), a.getQuantidade()};
             tabela.addRow(linha);
 
         }
@@ -300,7 +300,7 @@ public class Cadastrar_Solicitacao extends javax.swing.JFrame {
                         }
                     }
                     if (cod == -1) {
-                        tabela1.setValueAt(quant_prod - quantidade, linha, 3);
+                        tabela1.setValueAt(quant_prod + quantidade, linha, 3);
                         Object[] obj = {tabela1.getValueAt(linha, 0), tabela1.getValueAt(linha, 1), tabela1.getValueAt(linha, 2), quantidade};
                         tabela2.addRow(obj);
                     } else {
@@ -331,7 +331,7 @@ public class Cadastrar_Solicitacao extends javax.swing.JFrame {
                     aux = i;
                 }
             }
-            tabela1.setValueAt(((int) tabela1.getValueAt(aux, 3) + quant_prod), aux, 3);
+            tabela1.setValueAt(((int) tabela1.getValueAt(aux, 3) - quant_prod), aux, 3);
 
         } else {
             JOptionPane.showMessageDialog(this.getContentPane(), "Selecione um produto.");
@@ -351,7 +351,7 @@ public class Cadastrar_Solicitacao extends javax.swing.JFrame {
         Solicitacao solicitacao = new Solicitacao(0, data_nascimento, Float.parseFloat(multa.getText())
                 , Float.parseFloat(valor_total.getText()), (int) cod_fornecedor);
 
-        String insert = "INSERT INTO venda (data, multa, valor_total, fk_fornecedor)"
+        String insert = "INSERT INTO solicitacao (data, multa, valor_total, fk_fornecedor)"
                 + " VALUES (\'" + solicitacao.getData() + "\',\'" + solicitacao.getMulta()+ "\',"
                 + solicitacao.getValor_total() + "," + solicitacao.getFk_fornecedor() + ") returning id";
 
