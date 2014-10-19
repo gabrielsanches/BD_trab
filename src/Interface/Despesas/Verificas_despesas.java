@@ -54,7 +54,7 @@ public class Verificas_despesas extends javax.swing.JFrame {
         String data_vencimento = null;
         data_vencimento = sdf.format(a.getData_venc());            
             Object[] linha = {a.getId(), a.getDescricao(), a.getValor_pagar(), data_vencimento, a.getTaxas(), a.getMulta()
-                    , "Arrumar essa coluna"};
+                    };
             tabela_aux.addRow(linha);
         }
     }
@@ -85,11 +85,11 @@ public class Verificas_despesas extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Codigo", "Descricao", "Valor", "Vencimento", "Taxas", "Multa", "Status"
+                "Codigo", "Descricao", "Valor", "Vencimento", "Taxas", "Multa"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

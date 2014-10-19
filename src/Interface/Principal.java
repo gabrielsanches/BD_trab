@@ -45,6 +45,7 @@ public class Principal extends javax.swing.JFrame {
         setResizable(false);
         setTitle("Inicio");
         setLocationRelativeTo(null);
+//        relatorios.relatorio.gerarRelatorio();
     }
 
     /**

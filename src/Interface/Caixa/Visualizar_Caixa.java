@@ -87,10 +87,7 @@ public class Visualizar_Caixa extends javax.swing.JFrame {
 
         jTable_dispesas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Codigo", "Valor", "Data"
@@ -108,10 +105,7 @@ public class Visualizar_Caixa extends javax.swing.JFrame {
 
         jTable_caixas_antigos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Codigo", "Saldo Inicial", "Saldo Final", "Abertura", "Fechamento"
