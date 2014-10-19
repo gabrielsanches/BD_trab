@@ -14,7 +14,9 @@ import entidades.Produto;
 import entidades.Vendas;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,7 +28,8 @@ import javax.swing.table.DefaultTableModel;
  * @author Gabriel
  */
 public class Visualizar_Venda extends javax.swing.JFrame {
-
+    
+    Vendas v;
     ClienteDAO clientes;
     VendasDAO vendas;
 
@@ -34,6 +37,7 @@ public class Visualizar_Venda extends javax.swing.JFrame {
      * Creates new form Visualizar_Venda
      */
     public Visualizar_Venda(Vendas venda, ClienteDAO clientedao, VendasDAO vendasdao) {
+        v = venda;
         clientes = clientedao;
         vendas = vendasdao;
         initComponents();
@@ -73,8 +77,8 @@ public class Visualizar_Venda extends javax.swing.JFrame {
         n_parcelas.setText("" + venda.getN_parcela());
         multa.setText("" + venda.getMulta());
 
-        String select = "select produto.id as prod,nome,valor_venda,produto.quantidade as quant from venda"
-                + "inner join produto_venda on venda.id=produto_venda.id_venda"
+        String select = "select produto.id as prod,nome,valor_venda,produto.quantidade as quant from venda "
+                + "inner join produto_venda on venda.id=produto_venda.id_venda "
                 + "inner join produto on produto_venda.id_produto = produto.id where venda.id = " + venda.getId();
 
         ResultSet rs = null;
@@ -114,6 +118,8 @@ public class Visualizar_Venda extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         nome_cliente = new javax.swing.JTextField();
         edit = new javax.swing.JCheckBox();
+        alterar = new javax.swing.JToggleButton();
+        fechar = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -173,6 +179,20 @@ public class Visualizar_Venda extends javax.swing.JFrame {
             }
         });
 
+        alterar.setText("Alterar");
+        alterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                alterarActionPerformed(evt);
+            }
+        });
+
+        fechar.setText("Fechar");
+        fechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fecharActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -214,6 +234,14 @@ public class Visualizar_Venda extends javax.swing.JFrame {
                         .addGap(55, 55, 55)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(138, 138, 138)
+                        .addComponent(fechar))
+                    .addComponent(alterar))
+                .addGap(184, 184, 184))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -241,7 +269,11 @@ public class Visualizar_Venda extends javax.swing.JFrame {
                         .addComponent(multa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(66, 66, 66))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(alterar)
+                    .addComponent(fechar))
+                .addGap(23, 23, 23))
         );
 
         pack();
@@ -271,13 +303,36 @@ public class Visualizar_Venda extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_editActionPerformed
 
+    private void alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarActionPerformed
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date data2= null;
+
+        try {
+            data2 = sdf.parse(data.getText());
+        } catch (ParseException ex) {
+            Logger.getLogger(Visualizar_Venda.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        Vendas v2 = new Vendas(0, (String) forma_pag.getSelectedItem(), data2, Float.parseFloat(multa.getText()),Integer.parseInt(n_parcelas.getText()), v.getValor_total(), v.getFk_cliente());
+
+        System.out.println("Alterou Despesas? " + vendas.atualizar(v.getId(), v2));
+        dispose();
+    }//GEN-LAST:event_alterarActionPerformed
+
+    private void fecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fecharActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_fecharActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton alterar;
     private javax.swing.JFormattedTextField data;
     private javax.swing.JCheckBox edit;
+    private javax.swing.JToggleButton fechar;
     private javax.swing.JComboBox forma_pag;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
