@@ -5,6 +5,7 @@
  */
 package Interface.Caixa;
 
+import Interface.Principal;
 import conexão.DAOconf;
 import controle.CaixaDAO;
 import controle.DespesaDAO;
@@ -15,6 +16,7 @@ import java.awt.event.WindowEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -31,7 +33,7 @@ import javax.swing.table.DefaultTableModel;
 public class Visualizar_Caixa extends javax.swing.JFrame {
 
     float saldo_f;
-    float saldo_aplicado;
+    float saldo_aplicado=0;
     float total_v;
     float total_d;
     VendasDAO vendas;
@@ -72,38 +74,40 @@ public class Visualizar_Caixa extends javax.swing.JFrame {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date date = new Date();
         data_caixa.setText(dateFormat.format(date));
-        
-        total_v=0;
-        total_d=0;
+
+        total_v = 0;
+        total_d = 0;
         try {
             DefaultTableModel tabela_v = (DefaultTableModel) tabela_vendas.getModel();
-            ResultSet rs = DAOconf.Consulta("Select * from venda where ativo = true and data=\'" + data_caixa.getText());
+            ResultSet rs = DAOconf.Consulta("Select * from venda where ativo = true and data=\'" + data_caixa.getText() + "\'");
             while (rs.next()) {
 
                 Object[] linha = {rs.getLong("id"), rs.getFloat("valor_total"), rs.getDate("data")};
                 tabela_v.addRow(linha);
-                total_v+=rs.getFloat("valor_total");
+                total_v += rs.getFloat("valor_total");
             }
-            total_vendas.setText(""+total_v);
+            total_vendas.setText("" + total_v);
         } catch (SQLException ex) {
             Logger.getLogger(Visualizar_Caixa.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         try {
             DefaultTableModel tabela_d = (DefaultTableModel) tabela_dispesas.getModel();
-            ResultSet rs = DAOconf.Consulta("Select * from despesas where ativo = true and data_pagamento=\'" + data_caixa.getText());
+            ResultSet rs = DAOconf.Consulta("Select * from despesas where ativo = true and data_pagamento=\'" + data_caixa.getText() + "\'");
             while (rs.next()) {
 
                 Object[] linha = {rs.getLong("id"), rs.getFloat("valor_pagar"), rs.getDate("data_pagamento")};
                 tabela_d.addRow(linha);
+                total_d += rs.getFloat("valor_pagar");
             }
-            total_dispesas.setText(""+total_d);
+            total_dispesas.setText("" + total_d);
         } catch (SQLException ex) {
             Logger.getLogger(Visualizar_Caixa.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
+//        saldo_inicial.setText(""+);
         saldo_f = Float.parseFloat(total_vendas.getText()) - Float.parseFloat(total_dispesas.getText()) + Float.parseFloat(saldo_inicial.getText());
-        saldo_atual.setText("" + (Float.parseFloat(total_vendas.getText()) - Float.parseFloat(total_dispesas.getText())+Float.parseFloat(saldo_inicial.getText())));
+        saldo_atual.setText("" + (Float.parseFloat(total_vendas.getText()) - Float.parseFloat(total_dispesas.getText()) + Float.parseFloat(saldo_inicial.getText())));
 
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -206,6 +210,7 @@ public class Visualizar_Caixa extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tabela_caixas.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(tabela_caixas);
 
         jLabel1.setText("Data:");
@@ -250,6 +255,11 @@ public class Visualizar_Caixa extends javax.swing.JFrame {
         });
 
         fechar_caixa.setText("Fechar Caixa");
+        fechar_caixa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fechar_caixaActionPerformed(evt);
+            }
+        });
 
         aplicar_saldo.setText("Aplicar Saldo");
         aplicar_saldo.addActionListener(new java.awt.event.ActionListener() {
@@ -379,9 +389,26 @@ public class Visualizar_Caixa extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this.getContentPane(), "Digite uma entrada valida");
         } else {
             saldo_f += Float.parseFloat(aux);
-            saldo_aplicado = Float.parseFloat(aux);
+            saldo_atual.setText("" + saldo_f);
+            saldo_aplicado+= Float.parseFloat(aux);
         }
     }//GEN-LAST:event_aplicar_saldoActionPerformed
+
+    private void fechar_caixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechar_caixaActionPerformed
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date data = null;
+        
+        try {
+            data = sdf.parse(data_caixa.getText());
+        } catch (ParseException ex) {
+            Logger.getLogger(Visualizar_Caixa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+
+        Caixa c = new Caixa(0, Float.parseFloat(saldo_atual.getText()), data, Float.parseFloat(saldo_inicial.getText()), saldo_aplicado, data);
+        System.out.println("Inseriu Caixa? "+caixas.inserir(c));
+        
+    }//GEN-LAST:event_fechar_caixaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -42,15 +42,7 @@ public class Principal extends javax.swing.JFrame {
     DespesaDAO despesadao = dao.getDespesaDAO();
     SolicitacaoDAO solicitacoesdao = dao.getSolicitacaoDAO();
     
-    float saldo;
-
-    public float getSaldo() {
-        return saldo;
-    }
-
-    public void setSaldo(float saldo) {
-        this.saldo = saldo;
-    }
+    float saldo=0;
     
     /**
      * Creates new form Principal
@@ -61,7 +53,7 @@ public class Principal extends javax.swing.JFrame {
         setResizable(false);
         setTitle("Inicio");
         setLocationRelativeTo(null);
-        relatorios.relatorio.gerarRelatorio();
+//        relatorios.relatorio.gerarRelatorio();
     }
 
     /**
