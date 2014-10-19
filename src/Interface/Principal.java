@@ -12,6 +12,7 @@ import Interface.Despesas.Verificas_despesas;
 import Interface.Estoque.Verificar_Estoque;
 import Interface.Fabricante.Verificar_Fabricantes;
 import Interface.Fornecedores.Verificar_Fornecedores;
+import Interface.Solicaitacao.Verificar_Sol;
 import Interface.Vendas.Verificar_V;
 import conexão.DAOconf;
 import controle.ClienteDAO;
@@ -21,6 +22,7 @@ import controle.VendasDAO;
 import controle.DespesaDAO;
 import controle.FabricanteDAO;
 import controle.FornecedorDAO;
+import controle.SolicitacaoDAO;
 import controle.memoria.MemoriaDAOFactory;
 
 /**
@@ -36,6 +38,7 @@ public class Principal extends javax.swing.JFrame {
     FabricanteDAO fabricantedao = dao.getFabricanteDAO();
     FornecedorDAO fornecedordao = dao.getFornecedorDAO();
     DespesaDAO despesadao = dao.getDespesaDAO();
+    SolicitacaoDAO solicitacoesdao = dao.getSolicitacaoDAO();
     /**
      * Creates new form Principal
      */
@@ -67,6 +70,7 @@ public class Principal extends javax.swing.JFrame {
         despesas = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        solicitacoes = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -126,10 +130,24 @@ public class Principal extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 8)); // NOI18N
         jLabel2.setText("Consuelo Sistemas");
 
+        solicitacoes.setText("Solicitações");
+        solicitacoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                solicitacoesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(62, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(68, 68, 68))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel2))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -140,15 +158,9 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(despesas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(fornecedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(solicitacoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(62, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(68, 68, 68))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel2))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,7 +182,9 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(solicitacoes)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -219,6 +233,12 @@ public class Principal extends javax.swing.JFrame {
         vi.setVisible(true);
     }//GEN-LAST:event_despesasActionPerformed
 
+    private void solicitacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_solicitacoesActionPerformed
+        // TODO add your handling code here:
+        Verificar_Sol V_Sol= new Verificar_Sol(solicitacoesdao, fornecedordao, produtodao);
+        V_Sol.setVisible(true);
+    }//GEN-LAST:event_solicitacoesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -264,6 +284,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JButton produtos;
+    private javax.swing.JToggleButton solicitacoes;
     private javax.swing.JButton venda;
     // End of variables declaration//GEN-END:variables
 }
