@@ -13,6 +13,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -77,6 +78,10 @@ public class Cadastrar_Solicitacao extends javax.swing.JFrame {
             tabela.addRow(linha);
 
         }
+        
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        data.setText(dateFormat.format(date));        
 
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -388,6 +393,8 @@ public class Cadastrar_Solicitacao extends javax.swing.JFrame {
                 Logger.getLogger(Cadastrar_Solicitacao.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
+        
         dispose();
     }//GEN-LAST:event_cadastrarActionPerformed
 

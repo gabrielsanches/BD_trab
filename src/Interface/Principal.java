@@ -15,6 +15,7 @@ import Interface.Fornecedores.Verificar_Fornecedores;
 import Interface.Solicaitacao.Verificar_Sol;
 import Interface.Vendas.Verificar_V;
 import conexão.DAOconf;
+import controle.CaixaDAO;
 import controle.ClienteDAO;
 import controle.DAOFactory;
 import controle.ProdutoDAO;
@@ -32,6 +33,7 @@ import controle.memoria.MemoriaDAOFactory;
 public class Principal extends javax.swing.JFrame {
 
     DAOFactory dao = new MemoriaDAOFactory();
+    CaixaDAO caixadao = dao.getCaixaDAO();
     ClienteDAO clientedao = dao.getClienteDAO();
     VendasDAO vendasdao = dao.getVendasDAO();
     ProdutoDAO produtodao = dao.getProdutoDAO();
@@ -39,6 +41,17 @@ public class Principal extends javax.swing.JFrame {
     FornecedorDAO fornecedordao = dao.getFornecedorDAO();
     DespesaDAO despesadao = dao.getDespesaDAO();
     SolicitacaoDAO solicitacoesdao = dao.getSolicitacaoDAO();
+    
+    float saldo;
+
+    public float getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(float saldo) {
+        this.saldo = saldo;
+    }
+    
     /**
      * Creates new form Principal
      */
@@ -48,7 +61,7 @@ public class Principal extends javax.swing.JFrame {
         setResizable(false);
         setTitle("Inicio");
         setLocationRelativeTo(null);
-//        relatorios.relatorio.gerarRelatorio();
+        relatorios.relatorio.gerarRelatorio();
     }
 
     /**
@@ -224,7 +237,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Visualizar_Caixa Ver = new Visualizar_Caixa();
+        Visualizar_Caixa Ver = new Visualizar_Caixa(caixadao, despesadao, vendasdao);
         Ver.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -3,10 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Interface.Caixa;
 
+import conexão.DAOconf;
+import controle.CaixaDAO;
+import controle.DespesaDAO;
+import controle.VendasDAO;
+import entidades.Caixa;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -14,19 +30,87 @@ import javax.swing.JFrame;
  */
 public class Visualizar_Caixa extends javax.swing.JFrame {
 
+    float saldo_f;
+    float saldo_aplicado;
+    float total_v;
+    float total_d;
+    VendasDAO vendas;
+    CaixaDAO caixas;
+    DespesaDAO despesas;
+
+    public void atualizar() {
+        DefaultTableModel tabela_aux = (DefaultTableModel) tabela_caixas.getModel();
+        int max = tabela_aux.getRowCount();
+        for (int i = 0; i < max; i++) {
+            tabela_aux.removeRow(0);
+        }
+
+        List<Caixa> listTeste = caixas.listarTodos();
+        for (Caixa a : listTeste) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String data1, data2 = null;
+            data1 = sdf.format(a.getData());
+            data2 = sdf.format(a.getData_f());
+            Object[] linha = {a.getId(), a.getSaldo_incial(), a.getSaldo_aplicado(), a.getSaldo_final(), a.getData(), a.getData_f()};
+            tabela_aux.addRow(linha);
+        }
+    }
+
     /**
      * Creates new form Visualizar_Caixa
      */
-    public Visualizar_Caixa() {
+    public Visualizar_Caixa(CaixaDAO caixadao, DespesaDAO despesadao, VendasDAO vendasdao) {
+        vendas = vendasdao;
+        despesas = despesadao;
+        caixas = caixadao;
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle("Caixa");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        data_caixa.setText(dateFormat.format(date));
         
+        total_v=0;
+        total_d=0;
+        try {
+            DefaultTableModel tabela_v = (DefaultTableModel) tabela_vendas.getModel();
+            ResultSet rs = DAOconf.Consulta("Select * from venda where ativo = true and data=\'" + data_caixa.getText());
+            while (rs.next()) {
+
+                Object[] linha = {rs.getLong("id"), rs.getFloat("valor_total"), rs.getDate("data")};
+                tabela_v.addRow(linha);
+                total_v+=rs.getFloat("valor_total");
+            }
+            total_vendas.setText(""+total_v);
+        } catch (SQLException ex) {
+            Logger.getLogger(Visualizar_Caixa.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-        jLabel_saldo_atual.setText(""+(Float.parseFloat(jLabel_total_vendas.getText())-Float.parseFloat(jLabel_total_dispesas.getText())+
-                +Float.parseFloat(jLabel_saldo_inicial.getText())));
+        try {
+            DefaultTableModel tabela_d = (DefaultTableModel) tabela_dispesas.getModel();
+            ResultSet rs = DAOconf.Consulta("Select * from despesas where ativo = true and data_pagamento=\'" + data_caixa.getText());
+            while (rs.next()) {
+
+                Object[] linha = {rs.getLong("id"), rs.getFloat("valor_pagar"), rs.getDate("data_pagamento")};
+                tabela_d.addRow(linha);
+            }
+            total_dispesas.setText(""+total_d);
+        } catch (SQLException ex) {
+            Logger.getLogger(Visualizar_Caixa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        saldo_f = Float.parseFloat(total_vendas.getText()) - Float.parseFloat(total_dispesas.getText()) + Float.parseFloat(saldo_inicial.getText());
+        saldo_atual.setText("" + (Float.parseFloat(total_vendas.getText()) - Float.parseFloat(total_dispesas.getText())+Float.parseFloat(saldo_inicial.getText())));
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowActivated(WindowEvent e) {
+                atualizar();
+            }
+        });
     }
 
     /**
@@ -39,35 +123,36 @@ public class Visualizar_Caixa extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable_lucros = new javax.swing.JTable();
+        tabela_vendas = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable_dispesas = new javax.swing.JTable();
+        tabela_dispesas = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable_caixas_antigos = new javax.swing.JTable();
+        tabela_caixas = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jLabel_data_caixa = new javax.swing.JLabel();
+        data_caixa = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel_total_vendas = new javax.swing.JLabel();
+        total_vendas = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel_total_dispesas = new javax.swing.JLabel();
+        total_dispesas = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel7 = new javax.swing.JLabel();
-        jLabel_saldo_inicial = new javax.swing.JLabel();
+        saldo_inicial = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel_saldo_atual = new javax.swing.JLabel();
+        saldo_atual = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jButton_sair = new javax.swing.JButton();
-        jButton_fechar_caixa = new javax.swing.JButton();
+        fechar_caixa = new javax.swing.JButton();
+        aplicar_saldo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable_lucros.setModel(new javax.swing.table.DefaultTableModel(
+        tabela_vendas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -83,9 +168,10 @@ public class Visualizar_Caixa extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable_lucros);
+        tabela_vendas.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tabela_vendas);
 
-        jTable_dispesas.setModel(new javax.swing.table.DefaultTableModel(
+        tabela_dispesas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -101,29 +187,30 @@ public class Visualizar_Caixa extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable_dispesas);
+        tabela_dispesas.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(tabela_dispesas);
 
-        jTable_caixas_antigos.setModel(new javax.swing.table.DefaultTableModel(
+        tabela_caixas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Codigo", "Saldo Inicial", "Saldo Final", "Abertura", "Fechamento"
+                "Codigo", "Saldo Inicial", "Saldo Aplicado", "Saldo Final", "Abertura", "Fechamento"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane3.setViewportView(jTable_caixas_antigos);
+        jScrollPane3.setViewportView(tabela_caixas);
 
-        jLabel1.setText("Data de Abertura:");
+        jLabel1.setText("Data:");
 
-        jLabel_data_caixa.setText("22/10/1882");
+        data_caixa.setText("--/--/----");
 
         jLabel3.setText("Vendas");
 
@@ -133,15 +220,15 @@ public class Visualizar_Caixa extends javax.swing.JFrame {
 
         jLabel6.setText("Total:");
 
-        jLabel_total_vendas.setText("12.00");
+        total_vendas.setText("0");
 
         jLabel2.setText("Total:");
 
-        jLabel_total_dispesas.setText("21.00");
+        total_dispesas.setText("0");
 
         jLabel7.setText("Saldo Inicial:");
 
-        jLabel_saldo_inicial.setText("120.00");
+        saldo_inicial.setText("0");
 
         jLabel9.setText("R$");
 
@@ -151,7 +238,7 @@ public class Visualizar_Caixa extends javax.swing.JFrame {
 
         jLabel12.setText("Saldo Atual:");
 
-        jLabel_saldo_atual.setText("30,00");
+        saldo_atual.setText("0");
 
         jLabel13.setText("R$");
 
@@ -162,7 +249,14 @@ public class Visualizar_Caixa extends javax.swing.JFrame {
             }
         });
 
-        jButton_fechar_caixa.setText("Fechar Caixa");
+        fechar_caixa.setText("Fechar Caixa");
+
+        aplicar_saldo.setText("Aplicar Saldo");
+        aplicar_saldo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aplicar_saldoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -173,7 +267,7 @@ public class Visualizar_Caixa extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addGap(228, 228, 228)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 291, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 367, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addGap(178, 178, 178))
             .addGroup(layout.createSequentialGroup()
@@ -191,15 +285,17 @@ public class Visualizar_Caixa extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel_data_caixa)
+                        .addComponent(data_caixa)
                         .addGap(50, 50, 50)
                         .addComponent(jLabel12)
                         .addGap(7, 7, 7)
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel_saldo_atual)
-                        .addGap(76, 76, 76)
-                        .addComponent(jButton_fechar_caixa)
+                        .addComponent(saldo_atual)
+                        .addGap(46, 46, 46)
+                        .addComponent(aplicar_saldo)
+                        .addGap(18, 18, 18)
+                        .addComponent(fechar_caixa)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton_sair))
                     .addGroup(layout.createSequentialGroup()
@@ -210,20 +306,20 @@ public class Visualizar_Caixa extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel_saldo_inicial))
+                                .addComponent(saldo_inicial))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(74, 74, 74)
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel_total_vendas)
+                                .addComponent(total_vendas)
                                 .addGap(206, 206, 206)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel11)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel_total_dispesas)))
+                                .addComponent(total_dispesas)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -244,9 +340,9 @@ public class Visualizar_Caixa extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jLabel_total_vendas)
+                    .addComponent(total_vendas)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel_total_dispesas)
+                    .addComponent(total_dispesas)
                     .addComponent(jLabel10)
                     .addComponent(jLabel11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -254,16 +350,17 @@ public class Visualizar_Caixa extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel_data_caixa)
+                    .addComponent(data_caixa)
                     .addComponent(jLabel12)
-                    .addComponent(jLabel_saldo_atual)
+                    .addComponent(saldo_atual)
                     .addComponent(jLabel13)
                     .addComponent(jButton_sair)
-                    .addComponent(jButton_fechar_caixa))
+                    .addComponent(fechar_caixa)
+                    .addComponent(aplicar_saldo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jLabel_saldo_inicial)
+                    .addComponent(saldo_inicial)
                     .addComponent(jLabel9))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -276,9 +373,21 @@ public class Visualizar_Caixa extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton_sairActionPerformed
 
+    private void aplicar_saldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aplicar_saldoActionPerformed
+        String aux = JOptionPane.showInputDialog("Digite a quantia que será aplicada.", "");
+        if (aux.isEmpty() || aux == null) {
+            JOptionPane.showMessageDialog(this.getContentPane(), "Digite uma entrada valida");
+        } else {
+            saldo_f += Float.parseFloat(aux);
+            saldo_aplicado = Float.parseFloat(aux);
+        }
+    }//GEN-LAST:event_aplicar_saldoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton_fechar_caixa;
+    private javax.swing.JButton aplicar_saldo;
+    private javax.swing.JLabel data_caixa;
+    private javax.swing.JButton fechar_caixa;
     private javax.swing.JButton jButton_sair;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -292,17 +401,16 @@ public class Visualizar_Caixa extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JLabel jLabel_data_caixa;
-    private javax.swing.JLabel jLabel_saldo_atual;
-    private javax.swing.JLabel jLabel_saldo_inicial;
-    private javax.swing.JLabel jLabel_total_dispesas;
-    private javax.swing.JLabel jLabel_total_vendas;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable_caixas_antigos;
-    private javax.swing.JTable jTable_dispesas;
-    private javax.swing.JTable jTable_lucros;
+    private javax.swing.JLabel saldo_atual;
+    private javax.swing.JLabel saldo_inicial;
+    private javax.swing.JTable tabela_caixas;
+    private javax.swing.JTable tabela_dispesas;
+    private javax.swing.JTable tabela_vendas;
+    private javax.swing.JLabel total_dispesas;
+    private javax.swing.JLabel total_vendas;
     // End of variables declaration//GEN-END:variables
 }

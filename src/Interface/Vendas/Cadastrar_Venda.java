@@ -15,6 +15,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -73,9 +74,12 @@ public class Cadastrar_Venda extends javax.swing.JFrame {
         for (Produto a : listT) {
             Object[] linha = {a.getId(), a.getNome(), a.getValor_venda(), a.getQuantidade()};
             tabela.addRow(linha);
-
         }
-
+        
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        data.setText(dateFormat.format(date));
+        
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowActivated(WindowEvent e) {
@@ -345,7 +349,7 @@ public class Cadastrar_Venda extends javax.swing.JFrame {
                         tabela2.addRow(obj);
                     } else {
                         tabela1.setValueAt(quant_prod - quantidade, linha, 3);
-                        tabela2.setValueAt((int)tabela2.getValueAt(cod, 3)+quantidade, cod, 3);                  
+                        tabela2.setValueAt((int) tabela2.getValueAt(cod, 3) + quantidade, cod, 3);
                     }
                 }
             }

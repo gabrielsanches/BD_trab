@@ -17,7 +17,7 @@ public class relatorio {
     public static void gerarRelatorio() { // criação do objeto documento
         Document document = new Document();
         try {
-            PdfWriter.getInstance(document, new FileOutputStream("C://PDF_LinhaCodigo.pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream("C:/PDF_LinhaCodigo.pdf"));
             document.open(); // adicionando um parágrafo ao documento 
             document.add(new Paragraph("Exemplo Geração de Arquivo PDF via iText - Java"));
         } catch (DocumentException de) {

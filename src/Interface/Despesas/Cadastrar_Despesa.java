@@ -9,6 +9,7 @@ import controle.DespesaDAO;
 import controle.memoria.MemoriaDAOFactory;
 import entidades.Cliente;
 import entidades.Despesa;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -34,6 +35,11 @@ public class Cadastrar_Despesa extends javax.swing.JFrame {
         setResizable(false);
         setTitle("Cadastrar Despesa");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        data_pag.setText(dateFormat.format(date));  
+        data_venc.setText(dateFormat.format(date));  
     }
 
     /**

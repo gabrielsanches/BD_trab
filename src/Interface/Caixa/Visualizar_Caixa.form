@@ -28,7 +28,7 @@
               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="228" max="-2" attributes="0"/>
               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="291" max="32767" attributes="0"/>
+              <EmptySpace pref="367" max="32767" attributes="0"/>
               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="178" max="-2" attributes="0"/>
           </Group>
@@ -48,15 +48,17 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel_data_caixa" min="-2" max="-2" attributes="0"/>
+                      <Component id="data_caixa" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                       <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                       <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jLabel_saldo_atual" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
-                      <Component id="jButton_fechar_caixa" min="-2" max="-2" attributes="0"/>
+                      <Component id="saldo_atual" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                      <Component id="aplicar_saldo" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="fechar_caixa" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="jButton_sair" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -68,7 +70,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel_saldo_inicial" min="-2" max="-2" attributes="0"/>
+                              <Component id="saldo_inicial" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
@@ -76,13 +78,13 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel_total_vendas" min="-2" max="-2" attributes="0"/>
+                              <Component id="total_vendas" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="206" max="-2" attributes="0"/>
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel_total_dispesas" min="-2" max="-2" attributes="0"/>
+                              <Component id="total_dispesas" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -113,9 +115,9 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel_total_vendas" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="total_vendas" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel_total_dispesas" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="total_dispesas" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -124,17 +126,18 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel_data_caixa" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="data_caixa" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel_saldo_atual" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="saldo_atual" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButton_sair" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton_fechar_caixa" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fechar_caixa" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="aplicar_saldo" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel_saldo_inicial" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="saldo_inicial" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -150,7 +153,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="jTable_lucros">
+        <Component class="javax.swing.JTable" name="tabela_vendas">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="3" rowCount="0">
@@ -179,7 +182,7 @@
               </TableColumnModel>
             </Property>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
-              <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+              <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
             </Property>
           </Properties>
         </Component>
@@ -192,7 +195,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="jTable_dispesas">
+        <Component class="javax.swing.JTable" name="tabela_dispesas">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="3" rowCount="0">
@@ -221,7 +224,7 @@
               </TableColumnModel>
             </Property>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
-              <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+              <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
             </Property>
           </Properties>
         </Component>
@@ -234,12 +237,13 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="jTable_caixas_antigos">
+        <Component class="javax.swing.JTable" name="tabela_caixas">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="5" rowCount="0">
+              <Table columnCount="6" rowCount="0">
                 <Column editable="false" title="Codigo" type="java.lang.Object"/>
                 <Column editable="false" title="Saldo Inicial" type="java.lang.Object"/>
+                <Column editable="false" title="Saldo Aplicado" type="java.lang.Object"/>
                 <Column editable="false" title="Saldo Final" type="java.lang.Object"/>
                 <Column editable="false" title="Abertura" type="java.lang.Object"/>
                 <Column editable="false" title="Fechamento" type="java.lang.Object"/>
@@ -247,6 +251,11 @@
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
@@ -283,12 +292,12 @@
     </Container>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Data de Abertura:"/>
+        <Property name="text" type="java.lang.String" value="Data:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel_data_caixa">
+    <Component class="javax.swing.JLabel" name="data_caixa">
       <Properties>
-        <Property name="text" type="java.lang.String" value="22/10/1882"/>
+        <Property name="text" type="java.lang.String" value="--/--/----"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
@@ -311,9 +320,9 @@
         <Property name="text" type="java.lang.String" value="Total:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel_total_vendas">
+    <Component class="javax.swing.JLabel" name="total_vendas">
       <Properties>
-        <Property name="text" type="java.lang.String" value="12.00"/>
+        <Property name="text" type="java.lang.String" value="0"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
@@ -321,9 +330,9 @@
         <Property name="text" type="java.lang.String" value="Total:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel_total_dispesas">
+    <Component class="javax.swing.JLabel" name="total_dispesas">
       <Properties>
-        <Property name="text" type="java.lang.String" value="21.00"/>
+        <Property name="text" type="java.lang.String" value="0"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator1">
@@ -333,9 +342,9 @@
         <Property name="text" type="java.lang.String" value="Saldo Inicial:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel_saldo_inicial">
+    <Component class="javax.swing.JLabel" name="saldo_inicial">
       <Properties>
-        <Property name="text" type="java.lang.String" value="120.00"/>
+        <Property name="text" type="java.lang.String" value="0"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel9">
@@ -358,9 +367,9 @@
         <Property name="text" type="java.lang.String" value="Saldo Atual:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel_saldo_atual">
+    <Component class="javax.swing.JLabel" name="saldo_atual">
       <Properties>
-        <Property name="text" type="java.lang.String" value="30,00"/>
+        <Property name="text" type="java.lang.String" value="0"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel13">
@@ -376,10 +385,18 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_sairActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton_fechar_caixa">
+    <Component class="javax.swing.JButton" name="fechar_caixa">
       <Properties>
         <Property name="text" type="java.lang.String" value="Fechar Caixa"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="aplicar_saldo">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Aplicar Saldo"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="aplicar_saldoActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
