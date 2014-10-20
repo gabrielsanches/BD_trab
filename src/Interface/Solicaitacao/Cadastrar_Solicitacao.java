@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -33,16 +34,14 @@ public class Cadastrar_Solicitacao extends javax.swing.JFrame {
     /**
      * Creates new form Cadastrar_Solicitacao
      */
-        long cod_fornecedor;
-        float valor_t;
-        SolicitacaoDAO solicitacoes;
-        ProdutoDAO produtos;
+    long cod_fornecedor;
+    float valor_t;
+    SolicitacaoDAO solicitacoes;
+    ProdutoDAO produtos;
 
-        /**
-         * Creates new form Cadastrar_Venda
-         */
-    
-
+    /**
+     * Creates new form Cadastrar_Venda
+     */
     public void atualizar() {
         DefaultTableModel tabela = (DefaultTableModel) tabela_solicitacao.getModel();
 
@@ -78,10 +77,10 @@ public class Cadastrar_Solicitacao extends javax.swing.JFrame {
             tabela.addRow(linha);
 
         }
-        
+
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date date = new Date();
-        data.setText(dateFormat.format(date));        
+        data.setText(dateFormat.format(date));
 
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -353,11 +352,10 @@ public class Cadastrar_Solicitacao extends javax.swing.JFrame {
         } catch (ParseException ex) {
             Logger.getLogger(Cadastrar_Solicitacao.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Solicitacao solicitacao = new Solicitacao(0, data_nascimento, Float.parseFloat(multa.getText())
-                , Float.parseFloat(valor_total.getText()), (int) cod_fornecedor);
+        Solicitacao solicitacao = new Solicitacao(0, data_nascimento, Float.parseFloat(multa.getText()), Float.parseFloat(valor_total.getText()), (int) cod_fornecedor);
 
         String insert = "INSERT INTO solicitacao (data, multa, valor_total, fk_fornecedor)"
-                + " VALUES (\'" + solicitacao.getData() + "\',\'" + solicitacao.getMulta()+ "\',"
+                + " VALUES (\'" + solicitacao.getData() + "\',\'" + solicitacao.getMulta() + "\',"
                 + solicitacao.getValor_total() + "," + solicitacao.getFk_fornecedor() + ") returning id";
 
         long id_solicitacao = 0;
@@ -365,6 +363,24 @@ public class Cadastrar_Solicitacao extends javax.swing.JFrame {
             ResultSet insc = DAOconf.Consulta(insert);
             insc.next();
             id_solicitacao = insc.getLong("id");
+        } catch (SQLException ex) {
+            Logger.getLogger(Cadastrar_Solicitacao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(solicitacao.getData());
+
+        c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH));
+        c.set(Calendar.MONTH, c.get(Calendar.MONTH) + 1);
+        c.set(Calendar.YEAR, c.get(Calendar.YEAR));
+        
+        String date = new SimpleDateFormat("dd/MM/yyyy").format(c.getTime());
+
+        try {
+            DAOconf.execute("INSERT INTO despesas (descricao,multa,taxas,fixa,forma,data_venc,data_pagamento,valor_pagar,n_parcelas,idsolicitacao)"
+                    + " VALUES (\'Solicitacao\'," + solicitacao.getMulta() + ",0"
+                    + ",false,\'À Vista\',\'"
+                    + date + "\',\'" + solicitacao.getData() + "\'," + solicitacao.getValor_total() + ",0," + solicitacao.getId() + ")");
         } catch (SQLException ex) {
             Logger.getLogger(Cadastrar_Solicitacao.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -393,8 +409,7 @@ public class Cadastrar_Solicitacao extends javax.swing.JFrame {
                 Logger.getLogger(Cadastrar_Solicitacao.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
-        
+
         dispose();
     }//GEN-LAST:event_cadastrarActionPerformed
 
@@ -406,7 +421,7 @@ public class Cadastrar_Solicitacao extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton cadastrar;
     private javax.swing.JToggleButton cancelar;

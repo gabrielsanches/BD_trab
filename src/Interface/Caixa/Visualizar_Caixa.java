@@ -33,7 +33,7 @@ import javax.swing.table.DefaultTableModel;
 public class Visualizar_Caixa extends javax.swing.JFrame {
 
     float saldo_f;
-    float saldo_aplicado=0;
+    float saldo_aplicado = 0;
     float total_v;
     float total_d;
     VendasDAO vendas;
@@ -53,9 +53,15 @@ public class Visualizar_Caixa extends javax.swing.JFrame {
             String data1, data2 = null;
             data1 = sdf.format(a.getData());
             data2 = sdf.format(a.getData_f());
-            Object[] linha = {a.getId(), a.getSaldo_incial(), a.getSaldo_aplicado(), a.getSaldo_final(), a.getData(), a.getData_f()};
+            if (data1.equals(data_caixa.getText())){
+                fechar_caixa.setEnabled(false);
+            }
+            Object[] linha = {a.getId(), a.getSaldo_incial(), a.getSaldo_aplicado(), a.getSaldo_final(), data1, data2};
             tabela_aux.addRow(linha);
+            saldo_inicial.setText("" + a.getSaldo_final());
         }
+        saldo_atual.setText("" + (Float.parseFloat(total_vendas.getText()) - Float.parseFloat(total_dispesas.getText()) + Float.parseFloat(saldo_inicial.getText())+saldo_aplicado));
+
     }
 
     /**
@@ -82,7 +88,7 @@ public class Visualizar_Caixa extends javax.swing.JFrame {
             ResultSet rs = DAOconf.Consulta("Select * from venda where ativo = true and data=\'" + data_caixa.getText() + "\'");
             while (rs.next()) {
 
-                Object[] linha = {rs.getLong("id"), rs.getFloat("valor_total"), rs.getDate("data")};
+                Object[] linha = {rs.getLong("id"), rs.getFloat("valor_total"), dateFormat.format(rs.getDate("data"))};
                 tabela_v.addRow(linha);
                 total_v += rs.getFloat("valor_total");
             }
@@ -96,7 +102,7 @@ public class Visualizar_Caixa extends javax.swing.JFrame {
             ResultSet rs = DAOconf.Consulta("Select * from despesas where ativo = true and data_pagamento=\'" + data_caixa.getText() + "\'");
             while (rs.next()) {
 
-                Object[] linha = {rs.getLong("id"), rs.getFloat("valor_pagar"), rs.getDate("data_pagamento")};
+                Object[] linha = {rs.getLong("id"), rs.getFloat("valor_pagar"), dateFormat.format(rs.getDate("data_pagamento"))};
                 tabela_d.addRow(linha);
                 total_d += rs.getFloat("valor_pagar");
             }
@@ -106,8 +112,7 @@ public class Visualizar_Caixa extends javax.swing.JFrame {
         }
 
 //        saldo_inicial.setText(""+);
-        saldo_f = Float.parseFloat(total_vendas.getText()) - Float.parseFloat(total_dispesas.getText()) + Float.parseFloat(saldo_inicial.getText());
-        saldo_atual.setText("" + (Float.parseFloat(total_vendas.getText()) - Float.parseFloat(total_dispesas.getText()) + Float.parseFloat(saldo_inicial.getText())));
+        saldo_f = Float.parseFloat(total_vendas.getText()) - Float.parseFloat(total_dispesas.getText()) + Float.parseFloat(saldo_atual.getText());
 
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -390,24 +395,55 @@ public class Visualizar_Caixa extends javax.swing.JFrame {
         } else {
             saldo_f += Float.parseFloat(aux);
             saldo_atual.setText("" + saldo_f);
-            saldo_aplicado+= Float.parseFloat(aux);
+            saldo_aplicado += Float.parseFloat(aux);
         }
     }//GEN-LAST:event_aplicar_saldoActionPerformed
 
     private void fechar_caixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechar_caixaActionPerformed
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date data = null;
-        
+
         try {
             data = sdf.parse(data_caixa.getText());
         } catch (ParseException ex) {
             Logger.getLogger(Visualizar_Caixa.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
 
         Caixa c = new Caixa(0, Float.parseFloat(saldo_atual.getText()), data, Float.parseFloat(saldo_inicial.getText()), saldo_aplicado, data);
-        System.out.println("Inseriu Caixa? "+caixas.inserir(c));
-        
+        String insert = "INSERT INTO caixa (saldo_final,data_f,saldo_inicial,saldo_aplicado,data)"
+                + " VALUES (" + c.getSaldo_final() + ",'"
+                + c.getData_f() + "'," + c.getSaldo_incial() + "," + c.getSaldo_aplicado() + ",'" + c.getData() + "') returning id";
+
+        ResultSet rs;
+        try {
+            rs = DAOconf.Consulta(insert);
+            rs.next();
+            long cod_caixa = rs.getLong("id");
+            DefaultTableModel tabela_v = (DefaultTableModel) tabela_vendas.getModel();
+            DefaultTableModel tabela_d = (DefaultTableModel) tabela_dispesas.getModel();
+            DefaultTableModel tabela_c = (DefaultTableModel) tabela_caixas.getModel();
+            int max = tabela_v.getRowCount();
+            for (int i = 0; i < max; i++) {
+                long cod = (long) tabela_v.getValueAt(i, 0);
+                insert = "insert into entrada (id_venda,id_caixa) Values "
+                        + "(" + cod + ", " + cod_caixa + ")";
+
+                DAOconf.execute(insert);
+            }
+            max = tabela_d.getRowCount();
+            for (int i = 0; i < max; i++) {
+                long cod = (long) tabela_d.getValueAt(i, 0);
+                insert = "insert into saida (id_caixa,id_despesa) Values "
+                        + "(" + cod_caixa + ", " + cod + ")";
+
+                DAOconf.execute(insert);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Visualizar_Caixa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
     }//GEN-LAST:event_fechar_caixaActionPerformed
 
 
