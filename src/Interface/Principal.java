@@ -53,7 +53,6 @@ public class Principal extends javax.swing.JFrame {
         setResizable(false);
         setTitle("Inicio");
         setLocationRelativeTo(null);
-//        relatorios.relatorio.gerarRelatorio();
     }
 
     /**
@@ -131,6 +130,11 @@ public class Principal extends javax.swing.JFrame {
         });
 
         jButton8.setText("Relatorios");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 8)); // NOI18N
         jLabel2.setText("Consuelo Sistemas");
@@ -243,6 +247,10 @@ public class Principal extends javax.swing.JFrame {
         Verificar_Sol V_Sol= new Verificar_Sol(solicitacoesdao, fornecedordao, produtodao);
         V_Sol.setVisible(true);
     }//GEN-LAST:event_solicitacoesActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+                relatorios.relatorio.gerarRelatorio(caixadao);
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
      * @param args the command line arguments
