@@ -18,6 +18,7 @@ import controle.CaixaDAO;
 import entidades.Caixa;
 import java.io.FileNotFoundException;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,12 +43,16 @@ public class relatorio {
                 tabela.addCell("Fechamento");
                 List<Caixa> caixas = caixadao.listarTodos();
                 for (Caixa a : caixas) {
-//                    tabela.addCell(""+a.getId());
-//                    tabela.addCell(""+a.getSaldo_incial());
-//                    tabela.addCell(""+a.getSaldo_aplicado());
-//                    tabela.addCell(""+a.getSaldo_final());
-//                    tabela.addCell(a.getData());
-//                    tabela.addCell(a.getData_f());
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    String data1, data2 = null;
+                    data1 = sdf.format(a.getData());
+                    data2 = sdf.format(a.getData_f());
+                    tabela.addCell("" + a.getId());
+                    tabela.addCell("" + a.getSaldo_incial());
+                    tabela.addCell("" + a.getSaldo_aplicado());
+                    tabela.addCell("" + a.getSaldo_final());
+                    tabela.addCell(data1);
+                    tabela.addCell(data2);
                 }
                 document.add(tabela);
                 document.close();
